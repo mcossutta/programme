@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+
+<form action="/pagegardepdf">
+
+<div class="row">
+   <div class="col">
+    <select id ="sous_chapitre"  name = "sous_chapitre" class="custom-select custom-select-lg mb-3" aria-label="Default select example">
+      <option value="0">Selectionner un sous-chapitre</option>
+      {% for element in liste_sous_chapitre %}
+      <option value="{{element.id}}">{{element.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col">
+    <button type="submit" class="btn btn-primary">Générer pdf</button>
+  </div>
+
+</form>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Thème</th>
+      <th scope="col">Chapitre</th>
+      <th scope="col">Sous-chapitre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for element in liste_objectif %}
+           
+      <th scope="row">{{element.theme}}</th>
+      <td>{{element.name_c}}</td>
+      <td>{{element.name_sc}}</td>
+    </tr>
+    {% endfor %}  
+    
+  </tbody>
+
+</table>
+
+{% endblock content %}

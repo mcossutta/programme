@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('update_note',id= Dict_eleve.id) }}">
+
+  <div class="row">
+    <div class="col">
+      <h1>{{ Dict_eleve.prenom }} </h1> 
+   </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </div>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Chapitre</th>
+        <th scope="col">Niveau 1</th>
+        <th scope="col">Niveau 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for chapitre in Liste_chapitre %}
+             
+        <th scope="row">{{ chapitre.name }}</th>
+        <td>    
+            <select name='{{ chapitre.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
+            {% for option in options %}
+            {% if selected_value[chapitre.id~"A"] == option.value %}
+            <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
+            {% else %}
+            <option  value= "{{ option.value }}"> {{ option.texte }} </option>
+            {% endif %}
+            {% endfor %}
+          </select></td>
+        <td>    <select name='{{ chapitre.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
+          {% for option in options %}
+          {% if selected_value[chapitre.id~"B"] == option.value %}
+          <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
+          {% else %}
+          <option  value= "{{ option.value }}"> {{ option.texte }} </option>
+          {% endif %}
+          {% endfor %}
+          </select></td>
+      </tr>
+      {% endfor %}       
+    </tbody>
+
+
+</form>
+{% endblock content %}

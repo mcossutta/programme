@@ -1,0 +1,39 @@
+
+
+
+FRONTEND :
+- Page note par défaut avec identifiant 1
+- colonne de gauche avec plusieurs possibilités 
+- mise en place de filtres. TODOS
+-clickable card par sous-chapitre (exemple stack overflow) 
+
+
+BACKEND
+- projet sur github sans la bdd. TODOS
+- passage à sqlalchemy-flask pour manager les sessions TODOS
+- créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
+- un fichier bdd_init.py pour créer une bdd pour chaque personne TODOS
+- créer une table professeur 
+- créer une table classe 
+- notation peu consistante dans la bdd à modifier
+- ajouter à la DB la possibilité de groupe B et de gérer les items
+
+
+
+ONGLET Objectifs :
+- Faire deux onglets: 1 pour moi + 1 pour collègue
+- Compléter la liste des objectifs :
+    - Puissances ; racines ; Probabilités ; pourcentage ; maths financière ; transfo geom  
+    ;  notion de bases et triangles ; quadrilatères ; droites remarquables ; cercles et angles ; calcul littéral;
+    equations premier ; equation second degré ; fonction second degré, pythagore, thalès, aire et peri, volume
+- Possibilité de modifier la bdd en ajoutant supprimant des objectifs
+
+ONGLET ELEVES :
+
+- ajouter les élèves avec onglet ajout d'élèves et suppression d'élèves
+
+
+ONGLET EXERCICES ?
+- faire le cahier d'exercice via du merge. 
+
+

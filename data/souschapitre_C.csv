@@ -1,0 +1,31 @@
+id,id_item,name,id_theme
+1,1,Les quatre opérations,1
+3,1,Critère de divisibilité (pgcd et ppcm),1
+4,2,Nombres positifs et négatifs,1
+5,3, Fractions,1
+6,4,Puissances,1
+7,4,Notation scientifique,1
+8,4,Racines,1
+9,4,Probabilités,1
+10,5,"Règle de trois, vitesse et échelle",1
+11,5,Pourcentage,1
+12,5,Maths financière,1
+13,6,Transformations géométriques,2
+14,7,Notion de base et triangles,2
+15,7,Quadrilatères,2
+16,7,Droites remarquables des triangles,2
+17,8,Cercles et angles,2
+18,9,Solides,2
+19,10,Calcul littéral,3
+20,11,Équations du premier degré,3
+21,11,Systèmes d’équations,3
+22,11,Équations du second degré,3
+23,12,Notion de fonction,3
+24,12,Fonctions linéaires et affines,3
+25,12,Fonctions du second degré,3
+26,13,"Grandeurs, mesures et conversions",4
+27,14,Théorème de Pythagore,4
+28,14,Théorème de Thalès,4
+29,15,Aire et périmètre,4
+30,15,Volume,4
+31,16,Trigonométrie,4

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Mes élèves: </h1>
+{% for eleve in Dict_eleves %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <label for="eleve">{{ eleve.Nom }} {{ eleve.Prenom }} {{ eleve.classe }}</label>
+               </div>
+               <div class="col">
+                <a id ="eleve" href="{{url_for('note',id = eleve.id)}}" class="btn btn-primary">  Evaluations </a>
+                <a href="{{ url_for('evaluationpdf',id=eleve.id) }}" class="btn btn-primary">Bulletin</a>      
+                  </div>
+
+            </div>
+
+
+
+        </div>
+      </div>         
+
+    {% endfor %}
+
+{% endblock content %}
+
+
+
