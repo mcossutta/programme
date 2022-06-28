@@ -9,7 +9,7 @@ FRONTEND :
 
 
 BACKEND
-- projet sur github sans la bdd. TODOS
+- est-ce-que de supprimer les fichiers peut donner le tour ? (pdf "en cache" car meme modification du fichier tex demande refresh )
 - passage à sqlalchemy-flask pour manager les sessions TODOS
 - créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
 - un fichier bdd_init.py pour créer une bdd pour chaque personne TODOS
