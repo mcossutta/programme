@@ -1,24 +1,16 @@
-
-
-
 FRONTEND :
 - Page note par défaut avec identifiant 1
 - colonne de gauche avec plusieurs possibilités 
 - mise en place de filtres. TODOS
 -clickable card par sous-chapitre (exemple stack overflow) 
 
-
 BACKEND
-- est-ce-que de supprimer les fichiers peut donner le tour ? (pdf "en cache" car meme modification du fichier tex demande refresh )
-- passage à sqlalchemy-flask pour manager les sessions TODOS
+- créer une table professeur avec PBH en + TODOS + login avec filtre des élèves.
+- créer une table classe ?
 - créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
 - un fichier bdd_init.py pour créer une bdd pour chaque personne TODOS
-- créer une table professeur 
-- créer une table classe 
 - notation peu consistante dans la bdd à modifier
 - ajouter à la DB la possibilité de groupe B et de gérer les items
-
-
 
 ONGLET Objectifs :
 - Faire deux onglets: 1 pour moi + 1 pour collègue
@@ -29,8 +21,7 @@ ONGLET Objectifs :
 - Possibilité de modifier la bdd en ajoutant supprimant des objectifs
 
 ONGLET ELEVES :
-
-- ajouter les élèves avec onglet ajout d'élèves et suppression d'élèves
+- ajouter les élèves avec onglet ajout, suppression et modification d'élèves à partir d'un csv
 
 
 ONGLET EXERCICES ?

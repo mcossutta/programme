@@ -12,7 +12,7 @@
                </div>
                <div class="col">
                 <a id ="eleve" href="{{url_for('note',id = eleve.id)}}" class="btn btn-primary">  Evaluations </a>
-                <a href="{{ url_for('evaluationpdf',id=eleve.id) }}" class="btn btn-primary">Bulletin</a>      
+                <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-primary">Bulletin</a>      
                   </div>
 
             </div>

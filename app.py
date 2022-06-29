@@ -4,6 +4,7 @@ from code1.helpers import produce_pdf
 from latex import build_pdf
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
+import time
 
 # Fonction pour la production du tex de page de garde.
 
@@ -15,22 +16,23 @@ app.secret_key = 'super secret key'
 app.config['TESTING'] = True
 workingdir = os.path.abspath(os.getcwd())
 
+def get_timestamp():
+    return int(time.time())
+
+app.jinja_env.globals['timestamp'] = get_timestamp
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///data/base_chapitre.db'
 db = SQLAlchemy(app)
 Base = automap_base()
 Base.prepare(db.engine,reflect=True)
-Chapitre = Base.classes.items_C
+Chapitre = Base.classes.item
 Sous_Chapitre = Base.classes.souschapitre_C
-Objectifs = Base.classes.objectifs_C
+Objectifs = Base.classes.objectifs
 Theme = Base.classes.theme
 Eleves = Base.classes.eleves
 Note = Base.classes.note
 # Load table
-
-
-
-
-
 
 
 
@@ -53,27 +55,28 @@ def logout():
 def chapitres():
     #Liste des chapitres 
     L = [{"name":item.name, "id":str(item.id)} for item in db.session.query(Chapitre)]
-    
+    print(L) 
+
     #Liste des sous-chapitre
     L1 = [{"name":item.name,"id":str(item.id)} for item in db.session.query(Sous_Chapitre)]
-    
+
     # Tableau chapitre-sous-chapitre theme
     L2 = [{"name_sc": item1.name, "name_c":item2.name, "theme":item3.name } for item1,item2,item3 in db.session.\
         query(Sous_Chapitre,Chapitre,Theme).filter(Sous_Chapitre.id_item == Chapitre.id).\
             filter(Chapitre.id_theme==Theme.id)]
-    db.session.close()
     return render_template("chapitres.html", liste_chapitre = L,liste_sous_chapitre =L1,liste_objectif =L2)
 
 
 
-# Cette page devrait exporter un chapitre à partir du sous-chapitre.
+
 @app.route("/pagegardepdf")
 def page_garde_pdf():
+# message d'erreur si pas de selection
     sous_chapitre = request.args.get("sous_chapitre")
     if sous_chapitre == "0":
         flash("Choisir un chapitre")
         return redirect(url_for("chapitres"))
-    filepath = workingdir
+# Rempli le dicionnaire avec des requêtes à la db pour appeler la fonction produce_pdf
     dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme":"","sous_chapitre":""}
     dict_pdf["num_chapter"] = str(db.session.query(Sous_Chapitre).\
         filter(Sous_Chapitre.id ==sous_chapitre)[0].id_item)
@@ -87,14 +90,14 @@ def page_garde_pdf():
     dict_pdf["objectifs"] = [obj.objectifs for obj in db.session.query(Objectifs).\
         filter(Objectifs.id_sc ==sous_chapitre)]
     dict_pdf["trigramme"] = session["username"]
-    db.session.close()
-    return send_from_directory(filepath, produce_pdf(dict_pdf))
+    return send_from_directory(workingdir, produce_pdf(dict_pdf))
 
 
-@app.route("/evaluationpdf/<id>")
-def evaluationpdf(id):
+@app.route("/evaluationpdf/<id>/<time>")
+# La variable time permet de ne pas utiliser le cache pour le pdf
+def evaluationpdf(id,time):
+    print(time)
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
-    filepath = workingdir
     # Eleve
     eleve = db.session.query(Eleves).filter(Eleves.ID==id).all()[0]
     eleve_text = eleve.Prenom + " " + eleve.Nom +" ("+eleve.classe+")"
@@ -155,7 +158,7 @@ def evaluationpdf(id):
     pdf = build_pdf(open(output_file_tex))
     pdf.save_to(output_file_pdf)
     db.session.close()
-    return send_from_directory(filepath, output_file_pdf)
+    return send_from_directory(workingdir, output_file_pdf)
 
 
 
@@ -163,7 +166,6 @@ def evaluationpdf(id):
 @app.route("/eleves")
 def eleves():
     Dict_eleves =[{"Nom":item.Nom, "Prenom":item.Prenom, "classe":item.classe, "id":item.ID} for item in db.session.query(Eleves)]
-    print(Dict_eleves)
     return render_template("eleves.html", Dict_eleves = Dict_eleves)
 
 
