@@ -5,8 +5,7 @@ FRONTEND :
 -clickable card par sous-chapitre (exemple stack overflow) 
 
 BACKEND
-- créer une table professeur avec PBH en + TODOS + login avec filtre des élèves.
-- créer une table classe ?
+- ajouter le prenom et nom sur la page logout
 - créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
 - un fichier bdd_init.py pour créer une bdd pour chaque personne TODOS
 - notation peu consistante dans la bdd à modifier

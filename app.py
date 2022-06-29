@@ -32,18 +32,21 @@ Objectifs = Base.classes.objectifs
 Theme = Base.classes.theme
 Eleves = Base.classes.eleves
 Note = Base.classes.note
+Professeur = Base.classes.professeur
 # Load table
 
 
 
 # page par défaut login si pas loguer sinon une dashboard
+
 @app.route("/", methods=["POST","GET"])
 def index():
     if request.method == "POST":
         session["username"] = request.form["username"]
-        return render_template("index.html")
+        prof = db.session.query(Professeur).filter(Professeur.trigramme == session["username"])[0]
+        return render_template("index.html", prof=prof)
     else:
-        return render_template("index.html")
+        return render_template("index.html", prof={"prenom":"","nom":""})
 
 @app.route("/logout") 
 def logout():
@@ -101,6 +104,7 @@ def evaluationpdf(id,time):
     # Eleve
     eleve = db.session.query(Eleves).filter(Eleves.ID==id).all()[0]
     eleve_text = eleve.Prenom + " " + eleve.Nom +" ("+eleve.classe+")"
+    prof = db.session.query(Professeur).filter(Professeur.trigramme == eleve.trigramme)[0]
     # Arithmétique
     ari = ""
     for item in range(5):
@@ -150,6 +154,7 @@ def evaluationpdf(id,time):
     with open("templates/feuille_template_modele.tex", "r") as myfile :
         text = myfile.read()
         text = text.replace("$ELEVE$",eleve_text)
+        text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", ari+espace+algebre+gm)
     output_file_tex = "output/evaluation"+ str(id) +".tex"
     output_file_pdf = "output/evaluation"+ str(id) +".pdf"
@@ -157,7 +162,6 @@ def evaluationpdf(id,time):
         output.write(text)
     pdf = build_pdf(open(output_file_tex))
     pdf.save_to(output_file_pdf)
-    db.session.close()
     return send_from_directory(workingdir, output_file_pdf)
 
 
@@ -165,7 +169,8 @@ def evaluationpdf(id,time):
 
 @app.route("/eleves")
 def eleves():
-    Dict_eleves =[{"Nom":item.Nom, "Prenom":item.Prenom, "classe":item.classe, "id":item.ID} for item in db.session.query(Eleves)]
+    Dict_eleves =[{"Nom":item.Nom, "Prenom":item.Prenom, "classe":item.classe, "id":item.ID} for item in db.session.query(Eleves).\
+    filter(Eleves.trigramme == session["username"])]
     return render_template("eleves.html", Dict_eleves = Dict_eleves)
 
 
@@ -190,7 +195,6 @@ def note(id):
             selected_value[str(x.id_item)+"A"] = x.note
         else:
             selected_value[str(x.id_item)+"B"] = x.note
-    db.session.close()
     return render_template("note.html",Dict_eleve = Dict_eleve, Liste_chapitre = Liste_chapitre, selected_value=selected_value, options=options)
 
 
