@@ -1,8 +1,5 @@
 from flask import Flask, render_template ,request, send_from_directory, session, flash, redirect, url_for
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
 from code1.helpers import produce_pdf
 from latex import build_pdf
 from flask_sqlalchemy import SQLAlchemy
