@@ -5,6 +5,7 @@ from flask import  render_template ,request, send_from_directory, session, flash
 from code1.helpers import produce_pdf, tableau_note_1
 from models import *
 
+
 # Le repertoire de travail
 workingdir = os.path.abspath(os.getcwd())
 import time

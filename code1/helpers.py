@@ -37,7 +37,7 @@ def produce_pdf(dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme
 
 def tableau_note_1(id_eleve,conn,Eleves,Professeur,Note,Theme,Chapitre):
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
-    eleve = conn.query(Eleves).filter(Eleves.ID==id_eleve).all().first()
+    eleve = conn.query(Eleves).filter(Eleves.ID==id_eleve).first()
     eleve_text = eleve.Prenom + " " + eleve.Nom +" ("+eleve.classe+")"
     prof = conn.query(Professeur).filter(Professeur.trigramme == eleve.trigramme).first()
     texte_initial = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
