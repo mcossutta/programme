@@ -1,2 +1,4 @@
 data/base_chapitre.db
 output/*
+.venv
+TODOS.readme

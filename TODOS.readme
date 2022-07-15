@@ -5,20 +5,12 @@ FRONTEND :
 -clickable card par sous-chapitre (exemple stack overflow) 
 
 BACKEND
-- un fichier models.py pour gérer la base de donnée avec déclaration des classes  
-- @app.route('/uploads/<path:filename>')
-def download_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename, as_attachment=True)
 
 - notation peu consistante dans la bdd à modifier = tout les noms en miniscule + les foreign key = id_table
-
 - Sous-chapitre = blue print.
-
 - ajouter à la DB la possibilité de groupe A,B,C et de gérer les items
 - ajouter le prenom et nom sur la page de logout TODOS
 - créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
-
 
 
 ONGLET items bulletins 
