@@ -1,18 +1,33 @@
 FRONTEND :
-- Page note par défaut avec identifiant 1
-- colonne de gauche avec plusieurs possibilités 
+
+- colonne de gauche avec les possibilités TODOS
 - mise en place de filtres. TODOS
 -clickable card par sous-chapitre (exemple stack overflow) 
 
 BACKEND
-- ajouter le prenom et nom sur la page logout
-- créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
-- un fichier bdd_init.py pour créer une bdd pour chaque personne TODOS
-- notation peu consistante dans la bdd à modifier
-- ajouter à la DB la possibilité de groupe B et de gérer les items
+- un fichier models.py pour gérer la base de donnée avec déclaration des classes  
+- @app.route('/uploads/<path:filename>')
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename, as_attachment=True)
 
-ONGLET Objectifs :
-- Faire deux onglets: 1 pour moi + 1 pour collègue
+- notation peu consistante dans la bdd à modifier = tout les noms en miniscule + les foreign key = id_table
+
+- Sous-chapitre = blue print.
+
+- ajouter à la DB la possibilité de groupe A,B,C et de gérer les items
+- ajouter le prenom et nom sur la page de logout TODOS
+- créer des foreign key et un modele --> ca permettra les join plutot que les filtres.
+
+
+
+ONGLET items bulletins 
+- Page note par défaut avec aucun élève élève = 0 juste des filtres.
+
+
+ONGLET Objectifs : doit-être un blue print 
+
+(interessant pour certains)
 - Compléter la liste des objectifs :
     - Puissances ; racines ; Probabilités ; pourcentage ; maths financière ; transfo geom  
     ;  notion de bases et triangles ; quadrilatères ; droites remarquables ; cercles et angles ; calcul littéral;
@@ -23,7 +38,7 @@ ONGLET ELEVES :
 - ajouter les élèves avec onglet ajout, suppression et modification d'élèves à partir d'un csv
 
 
-ONGLET EXERCICES ?
+ONGLET EXERCICES :
 - faire le cahier d'exercice via du merge. 
 
 
