@@ -1,8 +1,18 @@
 from app import app
 from app import db
+import os
 from flask import  render_template ,request, send_from_directory, session, flash, redirect, url_for
 from code1.helpers import produce_pdf, tableau_note_1
 from models import *
+
+# Le repertoire de travail
+workingdir = os.path.abspath(os.getcwd())
+import time
+def get_timestamp():
+    return int(time.time())
+app.jinja_env.globals['timestamp'] = get_timestamp
+
+
 
 workingdir = os.path.abspath(os.getcwd())
 

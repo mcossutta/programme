@@ -5,7 +5,8 @@ FRONTEND :
 -clickable card par sous-chapitre (exemple stack overflow) 
 
 BACKEND
-
+- ajouter le timestamp au fichier plutôt que comme fonction globale 
+- 
 - notation peu consistante dans la bdd à modifier = tout les noms en miniscule + les foreign key = id_table
 - Sous-chapitre = blue print.
 - ajouter à la DB la possibilité de groupe A,B,C et de gérer les items
