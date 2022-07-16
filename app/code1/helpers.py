@@ -16,15 +16,15 @@ def produce_pdf(dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme
         objectifs_item_string = "A COMPLETER"
    
     # Modification des templates
-    with open("templates/page_de_garde_template.tex", "r") as myfile :
+    with open("app/templates/page_de_garde_template.tex", "r") as myfile :
         text = myfile.read()
         text = text.replace("$CHAPITRE$", dict_pdf["num_chapter"] +" " + dict_pdf["chapitre"])
         text = text.replace("$OBJECTIF$",objectifs_item_string)
         text = text.replace("$THEME$", dict_pdf["theme"])
         text = text.replace("$SOUS_CHAPITRE$",dict_pdf["sous_chapitre"] )
         text = text.replace("$TRIGRAMME$",dict_pdf["trigramme"] )
-    output_file_tex = "output/chapitre"+ dict_pdf["num_chapter"] +".tex"
-    output_file_pdf = "output/chapitre"+ dict_pdf["num_chapter"] +".pdf"
+    output_file_tex = "app/output/chapitre"+ dict_pdf["num_chapter"] +".tex"
+    output_file_pdf = "app/output/chapitre"+ dict_pdf["num_chapter"] +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))
@@ -54,13 +54,13 @@ def tableau_note_1(id_eleve,conn,Eleves,Professeur,Note,Theme,Chapitre):
             texte_final[x] = ""
     texte_final = "".join(texte_final.values())
     # Complète le texte :
-    with open("templates/feuille_template_modele.tex", "r") as myfile :
+    with open("app/templates/feuille_template_modele.tex", "r") as myfile :
         text = myfile.read()
         text = text.replace("$ELEVE$",eleve_text)
         text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", texte_final)
-    output_file_tex = "output/evaluation"+ str(id) +".tex"
-    output_file_pdf = "output/evaluation"+ str(id) +".pdf"
+    output_file_tex = "app/output/evaluation"+ str(id) +".tex"
+    output_file_pdf = "app/output/evaluation"+ str(id) +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))

@@ -2,8 +2,8 @@ from app import app
 from app import db
 import os
 from flask import  render_template ,request, send_from_directory, session, flash, redirect, url_for
-from code1.helpers import produce_pdf, tableau_note_1
-from models import *
+from app.code1.helpers import produce_pdf, tableau_note_1
+from app.models import *
 
 
 # Le repertoire de travail
