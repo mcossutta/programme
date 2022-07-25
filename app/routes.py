@@ -1,9 +1,9 @@
-from app import app
-from app import db
-import os
 from flask import  render_template ,request, send_from_directory, session, flash, redirect, url_for
-from app.code1.helpers import produce_pdf, tableau_note_1
-from app.models import *
+from app import app, db
+import os
+from app.models import Theme, Eleve, Professeur, Item, Note
+from app.helpers import produce_pdf, tableau_note_1
+
 
 
 # Le repertoire de travail
@@ -17,15 +17,18 @@ app.jinja_env.globals['timestamp'] = get_timestamp
 
 workingdir = os.path.abspath(os.getcwd())
 
-
-@app.route("/", methods=["POST","GET"])
+@app.route("/")
 def index():
-    if request.method == "POST":
-        session["username"] = request.form["username"]
-        prof = db.session.query(Professeur).filter(Professeur.trigramme == session["username"]).first()
-        return render_template("index.html", prof=prof)
+    if session["username"] is not None:
+        prof = Professeur.query.filter(Professeur.trigramme == session["username"]).first()
+        return render_template("index.html", prof = prof)
     else:
-        return render_template("index.html", prof={"prenom":"","nom":""})
+        return render_template("index.html", prof)
+ 
+
+@app.route("/login", methods=["POST","GET"])
+def login():
+    
 
 @app.route("/logout") 
 def logout():
@@ -35,19 +38,10 @@ def logout():
 
 @app.route("/chapitres")
 def chapitres():
-    #Liste des chapitres 
-    L = [{"name":item.name, "id":str(item.id)} for item in db.session.query(Chapitre)]
-    print(L) 
-
-    #Liste des sous-chapitre
-    L1 = [{"name":item.name,"id":str(item.id)} for item in db.session.query(Sous_Chapitre)]
-
-    # Tableau chapitre-sous-chapitre theme
-    L2 = [{"name_sc": item1.name, "name_c":item2.name, "theme":item3.name } for item1,item2,item3 in db.session.\
-        query(Sous_Chapitre,Chapitre,Theme).filter(Sous_Chapitre.id_item == Chapitre.id).\
-            filter(Chapitre.id_theme==Theme.id)]
-    return render_template("chapitres.html", liste_chapitre = L,liste_sous_chapitre =L1,liste_objectif =L2)
-
+    #Liste des chapitres
+    L = [{"name":item.nom, "id":str(item.id)} for item in Item.query.all()]
+    print(L)
+    return "TODOS"
 
 
 
@@ -79,7 +73,7 @@ def page_garde_pdf():
 # La variable time permet de ne pas utiliser le cache pour le pdf
 def evaluationpdf(id,time):
 
-    output_file_pdf = tableau_note_1(id,db.session,Eleves,Professeur,Note,Theme,Chapitre)
+    output_file_pdf = tableau_note_1(id,db.session,Eleve,Professeur,Note,Theme,Item)
     return send_from_directory(workingdir, output_file_pdf)
 
 
@@ -87,8 +81,8 @@ def evaluationpdf(id,time):
 
 @app.route("/eleves")
 def eleves():
-    Dict_eleves =[{"Nom":item.Nom, "Prenom":item.Prenom, "classe":item.classe, "id":item.ID} for item in db.session.query(Eleves).\
-    filter(Eleves.trigramme == session["username"])]
+    Dict_eleves =[{"Nom":item.Nom, "Prenom":item.Prenom, "classe":item.classe, "id":item.ID} for item in db.session.query(Eleve).\
+    filter(Eleve.trigramme == session["username"])]
     return render_template("eleves.html", Dict_eleves = Dict_eleves)
 
 
@@ -97,9 +91,9 @@ def note(id):
     options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
     Dict_eleve = {}
     Dict_eleve["id"] = id
-    Dict_eleve["nom"] = db.session.query(Eleves).filter(Eleves.ID == Dict_eleve["id"]).first().Nom
-    Dict_eleve["prenom"] = db.session.query(Eleves).filter(Eleves.ID == Dict_eleve["id"]).first().Prenom
-    Liste_chapitre = [{"name":item.name,"id":item.id} for item in db.session.query(Chapitre)]
+    Dict_eleve["nom"] = db.session.query(Eleve).filter(Eleve.id == Dict_eleve["id"]).first().Nom
+    Dict_eleve["prenom"] = db.session.query(Eleve).filter(Eleve.id == Dict_eleve["id"]).first().Prenom
+    Liste_chapitre = [{"name":item.name,"id":item.id} for item in db.session.query(Item)]
     
     # Liste des notes vides
     selected_value = {}

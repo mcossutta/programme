@@ -1,4 +1,4 @@
-data/base_chapitre.db
-output/*
+data/*
+app/output/*
 .venv
 TODOS.readme

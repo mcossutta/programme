@@ -1,3 +1,3 @@
 SECRET_KEY = 'GDtfDCFYjD'
-SQLALCHEMY_DATABASE_URI = 'sqlite:///app/data/base_chapitre.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
 FLASK_APP= 'gestion_maths'
