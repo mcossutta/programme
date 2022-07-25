@@ -1,5 +1,6 @@
 import pandas as pd
 from latex import build_pdf
+from app.models import Theme, Eleve, Professeur, Item, Note
 
 
 def produce_pdf(dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme":"","sous_chapitre":"", "trigramme":""}):
@@ -35,32 +36,44 @@ def produce_pdf(dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme
 
 
 
-def tableau_note_1(id_eleve,conn,Eleves,Professeur,Note,Theme,Chapitre):
+def tableau_note(id_eleve):
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
-    eleve = conn.query(Eleves).filter(Eleves.ID==id_eleve).first()
-    eleve_text = eleve.Prenom + " " + eleve.Nom +" ("+eleve.classe+")"
-    prof = conn.query(Professeur).filter(Professeur.trigramme == eleve.trigramme).first()
+    eleve = Eleve.query.get(id_eleve)
+    eleve_text = eleve.prenom + " " + eleve.nom +" ("+eleve.classe+")"
+    prof = eleve.professeur
     texte_initial = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
     texte_final = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
-    for name,id_chapitre,id_theme in conn.query(Chapitre.name,Chapitre.id,Theme.id).join(Theme).all():
-        note1 = conn.query(Note).filter(Note.id_eleve == id_eleve).\
-                filter(Note.id_item == id_chapitre).filter(Note.niveau == 1).first().note
-        note2 = conn.query(Note).filter(Note.id_eleve == id_eleve).\
-                filter(Note.id_item == id_chapitre).filter(Note.niveau == 2).first().note
+    
+    # pour chaque item on vérifie les notes
+    for item in Item.query.all():
+        note1 = Note.query.filter_by(id_eleve = id_eleve,id_item = item.id,niveau = 1).first()
+        if note1 is None:
+            note1 = 0
+        else:
+            note1 = note1.note
+        note2 = Note.query.filter_by(id_eleve = id_eleve, id_item = item.id,niveau = 2).first()
+        if note2 is None:
+            note2 = 0
+        else:
+            note2 = note2.note
+    # Si les notes ne sont pas vides on ajoute une ligne dans le bon theme
         if options[note1]["texte"]+options[note2]["texte"] != "":
-            texte_final[str(id_theme)]+="\n"+name+"&"+options[note1]["texte"]+"&"+options[note2]["texte"]+"\\\\"+"\n\\hline"    
+            texte_final[str(item.theme.id)]+="\n"+item.nom+"&"+options[note1]["texte"]+"&"+options[note2]["texte"]+"\\\\"+"\n\\hline"    
+    
+    # On crée le texte final
     for x in texte_initial.keys():
         if texte_final[x] == texte_initial[x]:
             texte_final[x] = ""
     texte_final = "".join(texte_final.values())
+
     # Complète le texte :
     with open("app/templates/feuille_template_modele.tex", "r") as myfile :
         text = myfile.read()
-        text = text.replace("$ELEVE$",eleve_text)
+        #text = text.replace("$ELEVE$",eleve_text)
         text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", texte_final)
-    output_file_tex = "app/output/evaluation"+ str(id) +".tex"
-    output_file_pdf = "app/output/evaluation"+ str(id) +".pdf"
+    output_file_tex = "app/output/evaluation"+ str(id_eleve) +".tex"
+    output_file_pdf = "app/output/evaluation"+ str(id_eleve) +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))

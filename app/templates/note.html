@@ -26,7 +26,7 @@
       <tr>
         {% for chapitre in Liste_chapitre %}
              
-        <th scope="row">{{ chapitre.name }}</th>
+        <th scope="row">{{ chapitre.nom }}</th>
         <td>    
             <select name='{{ chapitre.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
             {% for option in options %}

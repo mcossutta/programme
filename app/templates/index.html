@@ -5,21 +5,11 @@
 
 {% block content %}
 
-{% if session["username"] %}
+{% if session.get("id_professeur") %}
 <h1>Bienvenue {{ prof.prenom }} {{ prof.nom }}!</h1>
 <a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a>
 {% else %}
-<form method="POST" action="/">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Trigramme</label>
-      <input type="text" name="username" class="form-control"  placeholder="Trigramme">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Mot de passe</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
-    </div>  
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+<a href="{{ url_for('login') }}" class="btn btn-primary">Please login first</a>
 {% endif %}
 
 

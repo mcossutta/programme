@@ -6,7 +6,7 @@ class Theme(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(64), unique=True)
     
-    items = db.relationship('Item')
+    items = db.relationship('Item',backref="theme")
 
     def __repr__(self):
         return '<Theme : {}>'.format(self.nom)

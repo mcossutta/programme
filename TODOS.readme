@@ -2,19 +2,15 @@ FRONTEND :
 
 - colonne de gauche avec les possibilités TODOS
 - mise en place de filtres. TODOS
-- sépater login et logout TODOS
 -clickable card par sous-chapitre (exemple stack overflow) 
-
-
-BACKEND
-- remplacer le session trigramme par l'id du prof TODOS = système de login ?
-- updater les requetes avec version simplifiée vérifier les requetes avec des prints
-- ajouter un module de login
 - créer la page chapitre 
 
-
+BACKEND
+- Evaluation à updater TODOS
+- Note à updater TODOS
+- page chapitre
+- ajouter un module de login avec Flask-login
 - factoriser les  les extensions de fichier - ajouter le timestamp au fichier plutôt que comme fonction globale 
-
 - séparer les app en blue print.
 - deployer le projet sur le serveur 
 
