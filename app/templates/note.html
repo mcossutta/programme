@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+
+{% block titre %}
+Evaluations
+{% endblock titre %}
+
+
+
+
 {% block content %}
 
 <form action="{{ url_for('update_note',id= Dict_eleve.id) }}">
@@ -17,7 +25,8 @@
 <table class="table">
     <thead>
       <tr>
-        <th scope="col">Chapitre</th>
+        <th scope="col">Liste</th>
+        <th scope="col">Item</th>
         <th scope="col">Niveau 1</th>
         <th scope="col">Niveau 2</th>
       </tr>
@@ -25,7 +34,7 @@
     <tbody>
       <tr>
         {% for chapitre in Liste_chapitre %}
-             
+        <th scope="row">{{ chapitre.liste.nom }}</th>
         <th scope="row">{{ chapitre.nom }}</th>
         <td>    
             <select name='{{ chapitre.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>

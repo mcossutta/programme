@@ -1,27 +1,24 @@
-FRONTEND :
-
-- colonne de gauche avec les possibilités TODOS
+FRONTEND : 
 - mise en place de filtres. TODOS
--clickable card par sous-chapitre (exemple stack overflow) 
-- créer la page chapitre 
+- filtre item
+- filtre eleve
+- page home avec classe 
+- Page note par défaut avec aucun élève élève = 0 juste des filtres.
 
 BACKEND
-- Evaluation à updater TODOS
-- Note à updater TODOS
-- page chapitre
 - ajouter un module de login avec Flask-login
-- factoriser les  les extensions de fichier - ajouter le timestamp au fichier plutôt que comme fonction globale 
-- séparer les app en blue print.
+- Noms des fichiers - ajouter le timestamp au fichier plutôt que comme fonction globale 
+- séparer les app en blue print TODOS
 - deployer le projet sur le serveur 
 
-ONGLET items bulletins 
-- Page note par défaut avec aucun élève élève = 0 juste des filtres.
+ONGLET ITEMS : 
+- Possibilité d'ajouter des sous-items + sous-items A
 - Possibilité de créer sa liste d'objectifs
 
 ONGLET ELEVES :
 - ajouter les élèves avec onglet ajout, suppression et modification d'élèves à partir d'un csv
 
+ONGLET NOTE :
+modification des notes pour supprimer bouton enregistrer.
 
-
-
-
+ONGLET HOME :

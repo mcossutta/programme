@@ -22,7 +22,7 @@ def index():
         professeur = Professeur.query.get(session["id_professeur"])
         return render_template("index.html", prof = professeur)
     else:
-        return render_template("index.html")
+        return redirect(url_for('login'))
  
 
 @app.route("/login", methods=["POST","GET"])
@@ -42,13 +42,15 @@ def login():
 
 @app.route("/logout") 
 def logout():
-    session.pop("id_professeur")
-    return render_template("index.html")
+    if session.get("id_professeur"):
+        session.pop("id_professeur")
+    return render_template("logout.html")
     
 
-@app.route("/chapitres")
-def chapitres():
-    return render_template("TODOS.html")
+@app.route("/items")
+def items():
+    items = Item.query.all()
+    return render_template("item.html",items = items)
 
 
 
@@ -67,9 +69,12 @@ def evaluationpdf(id,time):
 
 @app.route("/eleves")
 def eleves():
-    Dict_eleves =[{"Nom":eleve.nom, "Prenom":eleve.prenom, "classe":eleve.classe, "id":eleve.id} for eleve in Eleve.query.\
-        filter_by(id_professeur = session["id_professeur"]).all()]
-    return render_template("eleves.html", Dict_eleves = Dict_eleves)
+    if session.get("id_professeur"):
+        professeur = Professeur.query.get(session["id_professeur"])
+        return render_template("eleves.html", Dict_eleves = professeur.eleves)        
+    else:
+        return redirect(url_for("login"))
+        
 
 
 @app.route("/note/<id>")
