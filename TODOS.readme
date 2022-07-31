@@ -1,24 +1,30 @@
-FRONTEND : 
-- mise en place de filtres. TODOS
-- filtre item
-- filtre eleve
-- page home avec classe 
-- Page note par défaut avec aucun élève élève = 0 juste des filtres.
+GENERAL : 
+- mise en place search
+
+LEFT COLUMN :
+- highlight on click TODOS
 
 BACKEND
 - ajouter un module de login avec Flask-login
-- Noms des fichiers - ajouter le timestamp au fichier plutôt que comme fonction globale 
-- séparer les app en blue print TODOS
-- deployer le projet sur le serveur 
 
-ONGLET ITEMS : 
+- séparer les app en blue print TODOS
+- deployer le projet sur le serveur TODOS
+- changer les noms des élèves tests TODOS
+
+ONGLET ITEMS :
+- filtre liste 
 - Possibilité d'ajouter des sous-items + sous-items A
 - Possibilité de créer sa liste d'objectifs
 
 ONGLET ELEVES :
-- ajouter les élèves avec onglet ajout, suppression et modification d'élèves à partir d'un csv
+- Possibilité de définir la liste de l'eleve
+- ajouter les élèves avec onglet ajout, suppression et modification d'élèves 
 
 ONGLET NOTE :
-modification des notes pour supprimer bouton enregistrer.
+- Changer code pour une forme par note pour accélerer TODOS !!!
+- production du pdf : 
+- Noms des fichiers - ajouter le timestamp au fichier plutôt que comme fonction globale 
+- suppression des fichiers au fur et à mesure 
 
 ONGLET HOME :
+- faire apparaitre les classes

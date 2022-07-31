@@ -49,6 +49,8 @@ def logout():
 
 @app.route("/items")
 def items():
+    if not session.get("id_professeur"):
+        return redirect(url_for("login"))
     items = Item.query.all()
     return render_template("item.html",items = items)
 
@@ -69,16 +71,19 @@ def evaluationpdf(id,time):
 
 @app.route("/eleves")
 def eleves():
-    if session.get("id_professeur"):
-        professeur = Professeur.query.get(session["id_professeur"])
-        return render_template("eleves.html", Dict_eleves = professeur.eleves)        
-    else:
+    if not session.get("id_professeur"):
         return redirect(url_for("login"))
+
+    professeur = Professeur.query.get(session["id_professeur"])
+    return render_template("eleves.html", Dict_eleves = professeur.eleves)        
+        
         
 
 
 @app.route("/note/<id>")
 def note(id):
+    if not session.get("id_professeur"):
+        return redirect(url_for("login"))
     options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
 
     eleve = Eleve.query.get(id)
@@ -122,4 +127,4 @@ def update_note(id):
             notes.first().note = int(request.args.get(x))
             db.session.commit()
        
-    return redirect(url_for('eleves'))
+    return redirect(url_for('note',id = id))

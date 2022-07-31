@@ -2,7 +2,7 @@
 
 
 {% block titre %}
-Evaluations
+Evaluations : {{ Dict_eleve.prenom }} {{Dict_eleve.nom}}.
 {% endblock titre %}
 
 
@@ -11,7 +11,7 @@ Evaluations
 {% block content %}
 
 <form action="{{ url_for('update_note',id= Dict_eleve.id) }}">
-
+<!--
   <div class="row">
     <div class="col">
       <h1>{{ Dict_eleve.prenom }} </h1> 
@@ -20,7 +20,7 @@ Evaluations
       <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
   </div>
-
+-->
 
 <table class="table">
     <thead>
@@ -37,7 +37,7 @@ Evaluations
         <th scope="row">{{ chapitre.liste.nom }}</th>
         <th scope="row">{{ chapitre.nom }}</th>
         <td>    
-            <select name='{{ chapitre.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
+            <select onchange="this.form.submit()" name='{{ chapitre.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
             {% for option in options %}
             {% if selected_value[chapitre.id~"A"] == option.value %}
             <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
@@ -46,7 +46,7 @@ Evaluations
             {% endif %}
             {% endfor %}
           </select></td>
-        <td>    <select name='{{ chapitre.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
+        <td>    <select onchange="this.form.submit()" name='{{ chapitre.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
           {% for option in options %}
           {% if selected_value[chapitre.id~"B"] == option.value %}
           <option value= "{{ option.value }}" selected> {{ option.texte }} </option>

@@ -11,12 +11,12 @@ Elèves
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col">
+                <div class="col-4">
                     <label for="eleve">{{ eleve.nom }} {{ eleve.prenom }} {{ eleve.classe }}</label>
                </div>
-               <div class="col">
-                <a id ="eleve" href="{{url_for('note',id = eleve.id)}}" class="btn btn-primary">  Evaluations </a>
-                <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-primary">Bulletin</a>      
+               <div class="col-4">
+                <a id ="eleve" href="{{url_for('note',id = eleve.id)}}" class="btn btn-sm btn-outline-secondary">  Evaluations </a>
+                <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>      
                   </div>
 
             </div>
