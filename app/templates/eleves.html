@@ -16,7 +16,7 @@ Elèves
                </div>
                <div class="col-4">
                 <a id ="eleve" href="{{url_for('note',id = eleve.id)}}" class="btn btn-sm btn-outline-secondary">  Evaluations </a>
-                <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>      
+                <a href="{{ url_for('evaluationpdf',id=eleve.id) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>      
                   </div>
 
             </div>
