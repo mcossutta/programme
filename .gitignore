@@ -1,4 +1,5 @@
 data/*
 app/output/*
-.venv
+.env
 TODOS.readme
+app.db

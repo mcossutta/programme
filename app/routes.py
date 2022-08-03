@@ -1,20 +1,15 @@
-from flask import  render_template ,request, send_from_directory, session, flash, redirect, url_for
+from flask import  render_template ,request, session, flash, redirect, url_for, send_file
 from app import app, db
-import os
-from app.models import Theme, Eleve, Professeur, Item, Note
+import os, io
+from app.models import Eleve, Professeur, Item, Note
 from app.helpers import tableau_note
 
 
 
 # Le repertoire de travail
 workingdir = os.path.abspath(os.getcwd())
-import time
-def get_timestamp():
-    return int(time.time())
-app.jinja_env.globals['timestamp'] = get_timestamp
 
 
-workingdir = os.path.abspath(os.getcwd())
 
 @app.route("/")
 def index():
@@ -31,7 +26,7 @@ def login():
         return render_template("login.html")
     if request.method == "POST":
         trigramme = request.form["trigramme"]
-        professeur = Professeur.query.filter(Professeur.trigramme == trigramme).first()
+        professeur = Professeur.query.filter_by(trigramme = trigramme).first()
         if professeur is None:
             flash("Ce trigramme n'est pas valable")
             return redirect(url_for("login")) 
@@ -56,15 +51,22 @@ def items():
 
 
 
-@app.route("/pagegardepdf")
-def page_garde_pdf():
-    return render_template("TODOS.html")
 
-
-@app.route("/evaluationpdf/<id>/<time>")
-def evaluationpdf(id,time):
+@app.route("/evaluationpdf/<id>")
+def evaluationpdf(id):
     output_file_pdf = tableau_note(id)
-    return send_from_directory(workingdir, output_file_pdf)
+
+    return_data = io.BytesIO()
+    with open(output_file_pdf, 'rb') as fo:
+        return_data.write(fo.read())
+    # (after writing, cursor will be at last byte, so move it to start)
+    return_data.seek(0)
+
+    os.remove(output_file_pdf)
+
+    return send_file(return_data, mimetype='application/pdf',
+                     attachment_filename='download_filename.pdf')
+
 
 
 
@@ -107,24 +109,23 @@ def note(id):
 
 @app.route("/update_note/<id>")
 def update_note(id): 
-    for x in request.args:
-        notes = Note.query.filter(Note.id_eleve ==int(id))
+    Niveau = {"A":1,"B":2}
+    x = request.args.get("id_change")
+    niveau = Niveau[x[-1:]]
+    id_item = int(x[:-1])
+    note_el = int(request.args.get(x))
+    notes = Note.query.filter_by(id_eleve =int(id),niveau = niveau,id_item=id_item)
+    
+    if notes.first() is not None:
+        notes.first().note = note_el    
+    else:
         note = Note()
         note.id_eleve = int(id)
-        if x[-1:] == "A":
-            notes = notes.filter(Note.niveau ==1)
-            note.niveau =1
-        else:
-            notes = notes.filter(Note.niveau == 2)
-            note.niveau = 2
-        notes =notes.filter( Note.id_item == int(x[:-1]))
-        note.id_item = int(x[:-1])
-        if notes.first() == None:
-            note.note = int(request.args.get(x))
-            db.session.add(note)
-            db.session.commit()
-        else:
-            notes.first().note = int(request.args.get(x))
-            db.session.commit()
-       
+        note.niveau = niveau
+        note.id_item = id_item
+        note.note = note_el
+        db.session.add(note)
+    
+    db.session.commit()
+
     return redirect(url_for('note',id = id))

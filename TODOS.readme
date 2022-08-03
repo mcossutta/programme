@@ -1,3 +1,6 @@
+GIT:
+verifier gitignore
+
 GENERAL : 
 - mise en place search
 
@@ -6,9 +9,8 @@ LEFT COLUMN :
 
 BACKEND
 - ajouter un module de login avec Flask-login
-
 - séparer les app en blue print TODOS
-- deployer le projet sur le serveur TODOS
+- deployer le projet sur le serveur TODOS !!!
 - changer les noms des élèves tests TODOS
 
 ONGLET ITEMS :
@@ -17,13 +19,12 @@ ONGLET ITEMS :
 - Possibilité de créer sa liste d'objectifs
 
 ONGLET ELEVES :
-- Possibilité de définir la liste de l'eleve
+- navigation dans entre les élèves
+- Possibilité de définir la liste de l'eleve TODOS !
 - ajouter les élèves avec onglet ajout, suppression et modification d'élèves 
 
 ONGLET NOTE :
-- Changer code pour une forme par note pour accélerer TODOS !!!
-- production du pdf : 
-- Noms des fichiers - ajouter le timestamp au fichier plutôt que comme fonction globale 
+- Noms des fichiers - ajouter le timestamp au fichier ou id_eleve probleme si plusieurs personnes
 - suppression des fichiers au fur et à mesure 
 
 ONGLET HOME :

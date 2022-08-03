@@ -1,39 +1,6 @@
-import pandas as pd
 from latex import build_pdf
-from app.models import Theme, Eleve, Professeur, Item, Note
-
-
-def produce_pdf(dict_pdf = {"objectifs":[],"num_chapter":"","chapitre":"","theme":"","sous_chapitre":"", "trigramme":""}):
-    print(dict_pdf["chapitre"] == dict_pdf["sous_chapitre"])
-    if dict_pdf["chapitre"] == dict_pdf["sous_chapitre"]:
-        dict_pdf["sous_chapitre"] =""
-    
-    # liste des objectifs    
-    objectifs_item_string = ""
-    for objectif in dict_pdf["objectifs"] :
-        objectifs_item_string = objectifs_item_string + "\n\item " + objectif
-    objectifs_item_string = "\\begin{itemize}" + objectifs_item_string + "\end{itemize}"
-    if objectifs_item_string == "\\begin{itemize}\end{itemize}":
-        objectifs_item_string = "A COMPLETER"
-   
-    # Modification des templates
-    with open("app/templates/page_de_garde_template.tex", "r") as myfile :
-        text = myfile.read()
-        text = text.replace("$CHAPITRE$", dict_pdf["num_chapter"] +" " + dict_pdf["chapitre"])
-        text = text.replace("$OBJECTIF$",objectifs_item_string)
-        text = text.replace("$THEME$", dict_pdf["theme"])
-        text = text.replace("$SOUS_CHAPITRE$",dict_pdf["sous_chapitre"] )
-        text = text.replace("$TRIGRAMME$",dict_pdf["trigramme"] )
-    output_file_tex = "app/output/chapitre"+ dict_pdf["num_chapter"] +".tex"
-    output_file_pdf = "app/output/chapitre"+ dict_pdf["num_chapter"] +".pdf"
-    with open(output_file_tex,"w") as output :
-        output.write(text)
-    pdf = build_pdf(open(output_file_tex))
-    pdf.save_to(output_file_pdf)
-    return output_file_pdf
-
-
-
+from app.models import Eleve, Item, Note
+import os, time
 
 
 def tableau_note(id_eleve):
@@ -72,10 +39,12 @@ def tableau_note(id_eleve):
         #text = text.replace("$ELEVE$",eleve_text)
         text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", texte_final)
-    output_file_tex = "app/output/evaluation"+ str(id_eleve) +".tex"
-    output_file_pdf = "app/output/evaluation"+ str(id_eleve) +".pdf"
+    
+    output_file_tex = "app/output/evaluation"+ str(int(time.time())) +".tex"
+    output_file_pdf = "app/output/evaluation"+ str(int(time.time())) +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))
+    os.remove(output_file_tex)
     pdf.save_to(output_file_pdf)
     return output_file_pdf
