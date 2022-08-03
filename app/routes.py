@@ -87,18 +87,14 @@ def note(id):
     if not session.get("id_professeur"):
         return redirect(url_for("login"))
     options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
-
     eleve = Eleve.query.get(id)
     items = Item.query.all()
-
     # Liste des notes vides
     selected_value = {}
     for item in items:
         selected_value[str(item.id)+"A"] = 0
         selected_value[str(item.id)+"B"] = 0
-    
-
-    # Liste des notes complétées avec la DB
+        # Liste des notes complétées avec la DB
     for x in eleve.notes:
         if x.niveau == 1:
             selected_value[str(x.id_item)+"A"] = x.note
