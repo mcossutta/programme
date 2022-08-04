@@ -10,7 +10,7 @@ def tableau_note(id_eleve):
     prof = eleve.professeur
     texte_initial = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
     texte_final = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
-    
+  
     # pour chaque item on vérifie les notes
     for item in Item.query.all():
         note1 = Note.query.filter_by(id_eleve = id_eleve,id_item = item.id,niveau = 1).first()
@@ -41,7 +41,7 @@ def tableau_note(id_eleve):
         text = text.replace("exemple&A&A\\\\", texte_final)
     
     output_file_tex = "app/output/evaluation"+ str(int(time.time())) +".tex"
-    output_file_pdf = "app/output/evaluation"+ str(int(time.time())) +".pdf"
+    output_file_pdf = "app/output/evaluation"+ str(int(time.time()))     +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))
