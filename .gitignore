@@ -1,4 +1,3 @@
-data/*
 app/output/*
 .env
 TODOS.readme

@@ -43,6 +43,11 @@ with open("data/eleve_test.csv") as csv_file:
         if Eleve.query.get(row["id"]) is None:
             eleve = Eleve(id = row["id"], nom = row["nom"], prenom = row["prenom"], classe= row["classe"], id_professeur = row["id_professeur"])
             db.session.add(eleve)
+        else:
+            eleve = Eleve.query.get(row["id"])
+            eleve.nom = row["nom"]
+            eleve.prenom = row["prenom"]
+            
 
 
 
