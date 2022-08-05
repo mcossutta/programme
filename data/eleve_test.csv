@@ -1,4 +1,4 @@
-id,nom,prenom,classe,idprofesseur
+id,nom,prenom,classe,id_professeur
 1,MCTnom1,MCTprenom1,1,1
 2,MCTnom2,MCTprenom2,1,1
 3,MCTnom3,MCTprenom3,1,1
