@@ -34,14 +34,14 @@ def tableau_note(id_eleve):
     texte_final = "".join(texte_final.values())
 
     # Complète le texte :
-    with open("app/templates/feuille_template_modele.tex", "r") as myfile :
+    with open("app/templates_latex/feuille_template_modele.tex", "r") as myfile :
         text = myfile.read()
-        #text = text.replace("$ELEVE$",eleve_text)
+        text = text.replace("$ELEVE$",eleve_text)
         text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", texte_final)
     
-    output_file_tex = "app/output/evaluation"+ str(int(time.time())) +".tex"
-    output_file_pdf = "app/output/evaluation"+ str(int(time.time()))     +".pdf"
+    output_file_tex = "evaluation"+ str(int(time.time())) +".tex"
+    output_file_pdf = "evaluation"+ str(int(time.time()))     +".pdf"
     with open(output_file_tex,"w") as output :
         output.write(text)
     pdf = build_pdf(open(output_file_tex))
