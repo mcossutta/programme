@@ -4,4 +4,4 @@ app.db
 __pycache__
 app/__pychache__
 venv/
-migration/
+migrations/
