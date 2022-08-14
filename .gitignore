@@ -1,7 +1,7 @@
-app/output/*
 .env
 TODOS.readme
 app.db
 __pycache__
 app/__pychache__
-venv/*
+venv/
+migration/
