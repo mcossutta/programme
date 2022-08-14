@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block titre %}
+Créer un nouvel élève
+{% endblock titre %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('add_eleve') }}">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text"  name="nom" class="form-control" >
+      <label for="prenom">Prenom</label>
+      <input type="text"  name="prenom" class="form-control"  >
+    </div>
+    <label for="liste">Liste</label>
+    <select name='liste' ng-model='discussionsSelect' class='form-control'>
+        {% for liste in listes() %}
+        <option  value= "{{ liste.id }}"> {{ liste.nom }} </option>
+        {% endfor %}
+      </select>
+
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  </form>
+ 
+{% endblock content %}

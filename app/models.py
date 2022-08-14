@@ -20,7 +20,7 @@ class Eleve(db.Model):
     prenom = db.Column(db.String(100))
     classe = db.Column(db.String(10))
     id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
-
+    id_liste = db.Column(db.Integer,db.ForeignKey('liste.id'))
     notes = db.relationship('Note',backref="eleve")
 
 # Les professeurs
@@ -49,6 +49,7 @@ class Liste(db.Model):
     
     abonnements = db.relationship("Abonnement",backref="liste")
     items = db.relationship("Item",backref="liste")
+    eleves = db.relationship("Eleve",backref="liste")
 
 # les items du bulletin
 class Item(db.Model):

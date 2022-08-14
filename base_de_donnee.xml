@@ -82,7 +82,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="782" y="455" name="eleve">
+<table x="752" y="412" name="eleve">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -98,6 +98,10 @@
 <row name="id_professeur" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="professeur" row="id" />
+</row>
+<row name="id_liste" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="liste" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>

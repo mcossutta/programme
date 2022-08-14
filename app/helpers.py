@@ -26,12 +26,13 @@ def tableau_note(id_eleve):
     # Si les notes ne sont pas vides on ajoute une ligne dans le bon theme
         if options[note1]["texte"]+options[note2]["texte"] != "":
             texte_final[str(item.theme.id)]+="\n"+item.nom+"&"+options[note1]["texte"]+"&"+options[note2]["texte"]+"\\\\"+"\n\\hline"    
-    
+
     # On crée le texte final
     for x in texte_initial.keys():
         if texte_final[x] == texte_initial[x]:
             texte_final[x] = ""
     texte_final = "".join(texte_final.values())
+    print(texte_final)
 
     # Complète le texte :
     with open("app/templates_latex/feuille_template_modele.tex", "r") as myfile :

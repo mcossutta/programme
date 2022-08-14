@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titre %}
+Modifier élève
+<a href="{{ url_for('delete_eleve',id=eleve.id) }}" class="btn btn-sm btn-outline-secondary">Supprimer</a>
+{% endblock titre %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('update_eleve',id=eleve.id) }}">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text"  name="nom" class="form-control"  placeholder={{ eleve.nom }}>
+      <label for="prenom">Prenom</label>
+      <input type="text"  name="prenom" class="form-control"  placeholder={{ eleve.prenom }}>
+    </div>
+    <label for="liste">Liste</label>
+    <select name='liste' ng-model='discussionsSelect' class='form-control'>
+        {% for liste in listes %}
+        {% if liste.id == eleve.id_liste %}
+        <option  selected value= "{{ liste.id }}"> {{ liste.nom }} </option>
+        {% else %}
+        <option  value= "{{ liste.id }}"> {{ liste.nom }} </option>
+        {% endif %}
+        {% endfor %}
+      </select>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+{% endblock content %}
