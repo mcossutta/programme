@@ -1,4 +1,4 @@
-from flask import  render_template ,request, session, flash, redirect, url_for, send_file
+from flask import  render_template ,request, session, flash, redirect, url_for, send_file, after_this_request
 from app import app, db
 import os, io
 from app.models import Eleve, Professeur, Item, Note, Liste, Classe
@@ -112,19 +112,15 @@ def add_eleve():
 
 @app.route("/evaluationpdf/<id>/<time>")
 def evaluationpdf(id,time):
-    
     output_file_pdf = tableau_note(id)
+    response = send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename='download_filename.pdf')
+    @app.after_this_request
+    def process_after_request(response):
+        @response.call_on_close
+        def hello():
+            os.remove(output_file_pdf)
+    return response
 
-    #return_data = io.BytesIO()
-    #with open(output_file_pdf, 'rb') as fo:
-    #    return_data.write(fo.read())
-    # (after writing, cursor will be at last byte, so move it to start)
-    #return_data.seek(0)
-
-    #os.remove(output_file_pdf)
-
-    return send_file("../"+output_file_pdf, mimetype='application/pdf',
-                     attachment_filename='download_filename.pdf')
 
 
 
