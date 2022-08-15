@@ -60,8 +60,9 @@
 
 
 {% block content %}
-Evaluations : {{ eleve.prenom }} {{eleve.nom}}.
-
+<h3>
+Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>   
+</h3>
 
 
 <form id="myform" action="{{ url_for('update_note',id= eleve.id,page=eleves.page) }}">
