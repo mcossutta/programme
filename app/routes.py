@@ -206,7 +206,7 @@ def update_note(id):
     
     db.session.commit()
 
-    return redirect(url_for('note',id = id))
+    return redirect(request.referrer)
 
 
 

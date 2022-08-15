@@ -64,7 +64,7 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}}.
 
 
 
-<form id="myform" action="{{ url_for('update_note',id= eleve.id) }}">
+<form id="myform" action="{{ url_for('update_note',id= eleve.id,page=eleves.page) }}">
 
   <input type="hidden" value="" id="id_change" name="id_change"/>
 
