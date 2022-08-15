@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+
+{% block titre %}
+
+ 
+<!-- Pagination Links-->
+<div class="text-right">
+    <a href="{{ url_for('notes', page=eleves.prev_num) }}"
+       class="btn btn-outline-dark 
+       {% if eleves.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a><!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in eleves.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if eleves.page == page_num %}
+            <a href="{{ url_for('notes', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('notes', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}    <a href="{{ url_for('notes', page=eleves.next_num) }}"
+       class="btn btn-outline-dark 
+       {% if eleves.page == eleves.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<!--<p class="text-right mt-3">
+   Showing page {{ eleves.page }} of {{ eleves.pages }}
+</p>-->
+
+
+    {% endblock titre %}
+
+{% block filtre %}
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Filtre Liste
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=1)}}">A</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=2)}}">B</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=3)}}">C</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page)}}">Supprimer filtre</a></li>
+  </ul>
+</div>
+{% endblock filtre %}
+
+
+
+
+
+
+{% block content %}
+Evaluations : {{ eleve.prenom }} {{eleve.nom}}.
+
+
+
+<form id="myform" action="{{ url_for('update_note',id= eleve.id) }}">
+
+  <input type="hidden" value="" id="id_change" name="id_change"/>
+
+ 
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Liste</th>
+        <th scope="col">Item</th>
+        <th scope="col">Niveau 1</th>
+        <th scope="col">Niveau 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for item in items %}
+        <th scope="row">{{ item.liste.nom }}</th>
+        <th scope="row">{{ item.nom }}</th>
+        <td>    
+            <select onchange="myFunction(this)" id='{{ item.id ~ "A" }}' name='{{ item.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
+            {% for option in options %}
+            {% if selected_value[item.id~"A"] == option.value %}
+            <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
+            {% else %}
+            <option  value= "{{ option.value }}"> {{ option.texte }} </option>
+            {% endif %}
+            {% endfor %}
+          </select></td>
+        <td>    <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
+          {% for option in options %}
+          {% if selected_value[item.id~"B"] == option.value %}
+          <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
+          {% else %}
+          <option  value= "{{ option.value }}"> {{ option.texte }} </option>
+          {% endif %}
+          {% endfor %}
+          </select></td>
+      </tr>
+      {% endfor %}       
+    </tbody>
+
+
+</form>
+
+<script>
+
+function myFunction(el){
+document.getElementById("id_change").value = el.id;
+document.getElementById("myform").submit()
+}
+
+</script>
+
+{% endblock content %}
