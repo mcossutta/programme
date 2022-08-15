@@ -114,15 +114,15 @@ def add_eleve():
 def evaluationpdf(id,time):
     output_file_pdf = tableau_note(id)
 
-    return_data = io.BytesIO()
-    with open(output_file_pdf, 'rb') as fo:
-        return_data.write(fo.read())
+    #return_data = io.BytesIO()
+    #with open(output_file_pdf, 'rb') as fo:
+    #    return_data.write(fo.read())
     # (after writing, cursor will be at last byte, so move it to start)
-    return_data.seek(0)
+    #return_data.seek(0)
 
-    os.remove(output_file_pdf)
+    #os.remove(output_file_pdf)
 
-    return send_file(return_data, mimetype='application/pdf',
+    return send_file(output_file_pdf, mimetype='application/pdf',
                      attachment_filename='download_filename.pdf')
 
 
