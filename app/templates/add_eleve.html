@@ -6,7 +6,7 @@ Créer un nouvel élève
 
 {% block content %}
 
-<form method="POST" action="{{ url_for('add_eleve') }}">
+<form method="POST" action="{{ url_for('add_eleve') }}" class="card p-2 col-4 container-fluid">
     <div class="form-group">
       <label for="nom">Nom</label>
       <input type="text"  name="nom" class="form-control" >
@@ -29,5 +29,5 @@ Créer un nouvel élève
       </select>
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
   </form>
- 
+
 {% endblock content %}

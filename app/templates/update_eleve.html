@@ -7,7 +7,7 @@ Modifier élève
 
 {% block content %}
 
-<form method="POST" action="{{ url_for('update_eleve',id=eleve.id) }}">
+<form method="POST" action="{{ url_for('update_eleve',id=eleve.id) }}" class="card p-2 col-4 container-fluid">
     <div class="form-group">
       <label for="nom">Nom</label>
       <input type="text"  name="nom" class="form-control"  value={{ eleve.nom }}>

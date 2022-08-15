@@ -57,9 +57,8 @@ def logout():
 def eleves():
     if not session.get("id_professeur"):
         return redirect(url_for("login"))
-
-    professeur = Professeur.query.get(session["id_professeur"])
-    return render_template("eleves.html", eleves = professeur.eleves)        
+    eleves = Eleve.query.filter_by(id_professeur=session["id_professeur"]).order_by(Eleve.id_classe,Eleve.nom)
+    return render_template("eleves.html", eleves = eleves)        
         
 @app.route("/delete/<id>")
 def delete_eleve(id):
@@ -139,7 +138,7 @@ def notes():
         id = request.args.get("id")
         eleves = Eleve.query.filter_by(id=id)
     else:
-        eleves = Eleve.query.filter_by(id_professeur=session["id_professeur"])
+        eleves = Eleve.query.filter_by(id_professeur=session["id_professeur"]).order_by(Eleve.id_classe,Eleve.nom)
 
     # On introduit une pagination
     page = request.args.get('page', 1, type=int)
