@@ -116,9 +116,9 @@ def evaluationpdf(id,time):
     @after_this_request
     def remove_file(response):
         os.remove(output_file_pdf)
-        print("fuck them all")
+        print(output_file_pdf)
         return response
-    return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename='download_filename.pdf')
+    return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename=output_file_pdf)
 
 
 
