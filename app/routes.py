@@ -113,14 +113,12 @@ def add_eleve():
 @app.route("/evaluationpdf/<id>/<time>")
 def evaluationpdf(id,time):
     output_file_pdf = tableau_note(id)
-    response = send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename='download_filename.pdf')
-    @app.after_this_request
-    def process_after_request(response):
-        @response.call_on_close
-        def hello():
-            os.remove(output_file_pdf)
-    return response
-
+    @after_this_request
+    def remove_file(response):
+        os.remove(output_file_pdf)
+        print("fuck them all")
+        return response
+    return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename='download_filename.pdf')
 
 
 
