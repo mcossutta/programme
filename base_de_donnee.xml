@@ -92,9 +92,6 @@
 <row name="prenom" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
-<row name="classe" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default></row>
 <row name="id_professeur" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="professeur" row="id" />
@@ -102,6 +99,10 @@
 <row name="id_liste" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="liste" row="id" />
+</row>
+<row name="id_classe" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="classe" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -154,6 +155,21 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="liste" row="id" />
 </row>
+<row name="id_professeur" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="professeur" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="437" y="153" name="classe">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="nom" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="id_professeur" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="professeur" row="id" />

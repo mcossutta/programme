@@ -1,7 +1,7 @@
 from flask import  render_template ,request, session, flash, redirect, url_for, send_file
 from app import app, db
 import os, io
-from app.models import Eleve, Professeur, Item, Note, Liste
+from app.models import Eleve, Professeur, Item, Note, Liste, Classe
 from app.helpers import tableau_note
 import time
 
@@ -76,28 +76,33 @@ def update_eleve(id):
     if request.method == "GET":
         eleve = Eleve.query.get(id)
         listes = Liste.query.all()
-        classes = Liste.query.all()
+        classes = Professeur.query.get(session["id_professeur"]).classes
         return render_template("update_eleve.html",eleve = eleve, listes = listes, classes = classes)
-        
+
     if request.method == "POST":
         eleve = Eleve.query.get(id)
-        print(request.form)
-        print(request.form["nom"])
-        print(request.form["prenom"])
-        print(request.form.get("liste"))
         eleve.nom = request.form["nom"]
         eleve.prenom = request.form["prenom"]
         eleve.id_liste = int(request.form.get("liste"))
+        eleve.id_classe = int(request.form.get("classe"))
         db.session.commit()
         return redirect(url_for("eleves"))
 
 
 @app.route("/add_eleve", methods=["POST","GET"])
 def add_eleve():
-
+    classes = Professeur.query.get(session["id_professeur"]).classes
     if request.method == "GET":
-        return render_template("add_eleve.html")
+        return render_template("add_eleve.html", classes = classes)
     if request.method == "POST":
+        eleve = Eleve()
+        eleve.nom = request.form["nom"]
+        eleve.prenom = request.form["prenom"]
+        eleve.id_liste = int(request.form.get("liste"))
+        eleve.id_professeur = session["id_professeur"]
+        eleve.id_classe = int(request.form.get("classe"))
+        db.session.add(eleve)
+        db.session.commit()
         return redirect(url_for("eleves"))
 
 

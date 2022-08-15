@@ -1,7 +1,7 @@
 # Run the script in flask shell
 
 from app  import app, db
-from app.models import Theme, Liste, Item , Professeur, Eleve
+from app.models import Theme, Liste, Item , Professeur, Eleve, Classe
 import csv 
 
 # Création des thèmes
@@ -36,12 +36,21 @@ with open("data/professeur.csv") as csv_file:
             professeur = Professeur(id = row["id"], nom = row["nom"], prenom = row["prenom"], trigramme = row["trigramme"])
             db.session.add(professeur)
 
+
+# Création des classes
+with open("data/classe.csv") as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    for row in csv_reader:
+        if Classe.query.get(row["id"]) is None:
+            classe = Classe(id = row["id"], nom = row["nom"], id_professeur = row["id_professeur"])
+            db.session.add(classe)
+
 # Création des élèves test
 with open("data/eleve_test.csv") as csv_file:
     csv_reader = csv.DictReader(csv_file)
     for row in csv_reader:
         if Eleve.query.get(row["id"]) is None:
-            eleve = Eleve(id = row["id"], nom = row["nom"], prenom = row["prenom"], classe= row["classe"], id_professeur = row["id_professeur"])
+            eleve = Eleve(id = row["id"], nom = row["nom"], prenom = row["prenom"], id_classe= row["id_classe"], id_professeur = row["id_professeur"])
             db.session.add(eleve)
         else:
             eleve = Eleve.query.get(row["id"])

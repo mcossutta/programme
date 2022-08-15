@@ -5,3 +5,4 @@ __pycache__
 app/__pychache__
 venv/
 migrations/
+.env

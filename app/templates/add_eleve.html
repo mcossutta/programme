@@ -19,7 +19,14 @@ Créer un nouvel élève
         <option  value= "{{ liste.id }}"> {{ liste.nom }} </option>
         {% endfor %}
       </select>
-
+      <label for="classe">Classe</label>
+      <select name='classe' ng-model='discussionsSelect' class='form-control'>
+        {% for classe in classes %}
+        
+        <option  value= "{{ classe.id }}"> {{ classe.nom }} </option>
+     
+        {% endfor %}
+      </select>
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
   </form>
  

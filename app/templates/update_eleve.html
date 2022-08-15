@@ -10,9 +10,9 @@ Modifier élève
 <form method="POST" action="{{ url_for('update_eleve',id=eleve.id) }}">
     <div class="form-group">
       <label for="nom">Nom</label>
-      <input type="text"  name="nom" class="form-control"  placeholder={{ eleve.nom }}>
+      <input type="text"  name="nom" class="form-control"  value={{ eleve.nom }}>
       <label for="prenom">Prenom</label>
-      <input type="text"  name="prenom" class="form-control"  placeholder={{ eleve.prenom }}>
+      <input type="text"  name="prenom" class="form-control"  value={{ eleve.prenom }}>
     </div>
     <label for="liste">Liste</label>
     <select name='liste' ng-model='discussionsSelect' class='form-control'>
@@ -24,8 +24,18 @@ Modifier élève
         {% endif %}
         {% endfor %}
       </select>
+      <label for="classe">Classe</label>
+      <select name='classe' ng-model='discussionsSelect' class='form-control'>
+        {% for classe in classes %}
+        {% if classe.id == eleve.id_classe %}
+        <option  selected value= "{{ classe.id }}"> {{ classe.nom }} </option>
+        {% else %}
+        <option  value= "{{ classe.id }}"> {{ classe.nom }} </option>
+        {% endif %}
+        {% endfor %}
+      </select>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
   </form>
 
 {% endblock content %}

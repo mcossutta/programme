@@ -18,11 +18,12 @@ class Eleve(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     nom = db.Column(db.String(100))
     prenom = db.Column(db.String(100))
-    classe = db.Column(db.String(10))
     id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
     id_liste = db.Column(db.Integer,db.ForeignKey('liste.id'))
+    id_classe = db.Column(db.Integer,db.ForeignKey('classe.id'))
+    
     notes = db.relationship('Note',backref="eleve")
-
+    
 # Les professeurs
 class Professeur(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +34,7 @@ class Professeur(db.Model):
     abonnements = db.relationship('Abonnement',backref="professeur")
     eleves = db.relationship('Eleve',backref="professeur")
     notes = db.relationship('Note',backref="professeur")
+    classes = db.relationship('Classe',backref="professeur")
 
 
 # Les listes auxquelles le prof est abonné --> seulement une table ?
@@ -71,3 +73,9 @@ class Note(db.Model):
     id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
 
 
+# les classes de l'école
+class Classe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(100), unique = True)
+    id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
+    eleves = db.relationship("Eleve",backref="classe")
