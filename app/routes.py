@@ -109,8 +109,8 @@ def add_eleve():
 
 
 
-@app.route("/evaluationpdf/<id>/<time>")
-def evaluationpdf(id,time):
+@app.route("/evaluationpdf/<id>")
+def evaluationpdf(id):
     output_file_pdf = tableau_note(id)
     @after_this_request
     def remove_file(response):

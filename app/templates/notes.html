@@ -61,7 +61,7 @@
 
 {% block content %}
 <h3>
-Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('evaluationpdf',id=eleve.id,time=timestamp()) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>   
+Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('evaluationpdf',id=eleve.id) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>   
 </h3>
 
 
