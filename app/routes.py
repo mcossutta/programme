@@ -129,46 +129,6 @@ def evaluationpdf(id,time):
 
 
 
-@app.route("/note/<id>")
-def note(id):
-    # check login
-    if not session.get("id_professeur"):
-        return redirect(url_for("login"))
-    
-    # texte des évaluations
-    options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
-    
-
-    # Eleve
-    eleve = Eleve.query.get(id)
-    if eleve.liste is None:
-        items = Item.query.all()
-    else:
-        items = Item.query.filter_by(id_liste = eleve.liste.id)
-    # Liste de l'élève
-    
-    # Filtre élève
-    if request.args.get("liste") is not None:
-        id_liste = request.args.get("liste")
-        liste_filtre = Liste.query.get(id_liste)
-        items = liste_filtre.items
-
-    # Liste des notes vides
-    selected_value = {}
-    for item in items:
-        selected_value[str(item.id)+"A"] = 0
-        selected_value[str(item.id)+"B"] = 0
-        # Liste des notes complétées avec la DB
-    for x in eleve.notes:
-        if x.niveau == 1:
-            selected_value[str(x.id_item)+"A"] = x.note
-        else:
-            selected_value[str(x.id_item)+"B"] = x.note
-    return render_template("note.html",eleve = eleve, items = items, selected_value=selected_value, options=options)
-
-
-
-
 @app.route("/notes")
 def notes():
     # check login
