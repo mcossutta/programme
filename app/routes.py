@@ -118,7 +118,7 @@ def evaluationpdf(id,time):
         os.remove(output_file_pdf)
         print(output_file_pdf)
         return response
-    return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename=output_file_pdf)
+    return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename=output_file_pdf,as_attachment=True)
 
 
 
