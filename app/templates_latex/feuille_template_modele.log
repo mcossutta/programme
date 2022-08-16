@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.6.19)  29 JUN 2022 10:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.6.19)  16 AUG 2022 10:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/home/mathieu/Insync/po61jrt@eduvaud.ch/OneDrive Biz/EDT acceuil/7 Programme/programme/templates/feuille_template_modele.tex"
-(/home/mathieu/Insync/po61jrt@eduvaud.ch/OneDrive Biz/EDT acceuil/7 Programme/programme/templates/feuille_template_modele.tex
+**"/home/mathieu/Insync/po61jrt@eduvaud.ch/OneDrive Biz/EDT acceuil/7 Programme/programme/app/templates_latex/feuille_template_modele.tex"
+(/home/mathieu/Insync/po61jrt@eduvaud.ch/OneDrive Biz/EDT acceuil/7 Programme/programme/app/templates_latex/feuille_template_modele.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -72,12 +72,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--36
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./feuille_template_modele.aux) ) 
 Here is how much of TeX's memory you used:
  510 strings out of 480247
- 9411 string characters out of 5896151
+ 9441 string characters out of 5896151
  295385 words of memory out of 5000000
  18520 multiletter control sequences out of 15000+600000
  474467 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 33i,9n,38p,293b,206s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 33i,9n,38p,303b,206s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
 Output written on feuille_template_modele.pdf (1 page, 48047 bytes).
 PDF statistics:
