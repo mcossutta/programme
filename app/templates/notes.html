@@ -46,10 +46,17 @@
     Filtre Liste
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=1)}}">A</a></li>
+    {% if id %}
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=1,id=id)}}">A</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=2,id=id)}}">B</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=3,id=id)}}">C</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,id=id)}}">Supprimer filtre</a></li>
+  {% else %}
+  <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=1)}}">A</a></li>
     <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=2)}}">B</a></li>
     <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page,liste=3)}}">C</a></li>
     <li><a class="dropdown-item" href="{{ url_for('notes',page=eleves.page)}}">Supprimer filtre</a></li>
+   {% endif %} 
   </ul>
 </div>
 {% endblock filtre %}

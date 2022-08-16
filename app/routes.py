@@ -133,13 +133,13 @@ def notes():
     # texte des évaluations
     options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
 
+    id = request.args.get("id")
     
-    if request.args.get("id") is not None:
-        id = request.args.get("id")
+    if id is not None:
         eleves = Eleve.query.filter_by(id=id)
     else:
         eleves = Eleve.query.filter_by(id_professeur=session["id_professeur"]).order_by(Eleve.id_classe,Eleve.nom)
-
+  
     # On introduit une pagination
     page = request.args.get('page', 1, type=int)
     eleves = eleves.paginate(page=page, per_page=1)
@@ -150,10 +150,11 @@ def notes():
         items = Item.query.all()
     else:
         items = Item.query.filter_by(id_liste = eleve.liste.id)
-    # Liste de l'élève
+    
     
     # Filtre élève
-    if request.args.get("liste") is not None:
+    id_liste = request.args.get("liste")
+    if id_liste is not None:
         id_liste = request.args.get("liste")
         liste_filtre = Liste.query.get(id_liste)
         items = liste_filtre.items
@@ -171,7 +172,7 @@ def notes():
         else:
             selected_value[str(x.id_item)+"B"] = x.note
 
-    return render_template("notes.html",eleves = eleves,eleve = eleve, items = items, selected_value=selected_value, options=options)
+    return render_template("notes.html",eleves = eleves,eleve = eleve, items = items, selected_value=selected_value, options=options,id=id)
 
 
 
