@@ -93,23 +93,18 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('evaluationpd
         {% for item in items %}
         <th scope="row">{{ item.liste.nom }}</th>
         <th scope="row">{{ item.nom }}</th>
-        <td>    
+        <td>   
             <select onchange="myFunction(this)" id='{{ item.id ~ "A" }}' name='{{ item.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
-            {% for option in options %}
-            {% if selected_value[item.id~"A"] == option.value %}
-            <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
-            {% else %}
-            <option  value= "{{ option.value }}"> {{ option.texte }} </option>
-            {% endif %}
-            {% endfor %}
-          </select></td>
-        <td>    <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
+              {% for option in options %}
+                <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"A"] == option.value}}> {{ option.texte }} </option>
+              {% endfor %}
+            </select>
+        </td>
+
+        <td>    
+          <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
           {% for option in options %}
-          {% if selected_value[item.id~"B"] == option.value %}
-          <option value= "{{ option.value }}" selected> {{ option.texte }} </option>
-          {% else %}
-          <option  value= "{{ option.value }}"> {{ option.texte }} </option>
-          {% endif %}
+          <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"A"] == option.value}}> {{ option.texte }} </option>
           {% endfor %}
           </select></td>
       </tr>
