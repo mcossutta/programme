@@ -7,9 +7,9 @@
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       {% if session.get("id_professeur") %}
-      <a class="nav-link px-3" href="{{url_for('logout')}}">Sign out</a>
+      <a class="nav-link px-3" href="{{url_for('auth.logout')}}">Sign out</a>
       {% else %}
-      <a class="nav-link px-3" href="{{url_for('login')}}">Sign in</a>
+      <a class="nav-link px-3" href="{{url_for('auth.login')}}">Sign in</a>
       {% endif %}
     </div>
   </div>
