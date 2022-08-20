@@ -22,13 +22,13 @@ def index():
         professeur = Professeur.query.get(session["id_professeur"])
         return render_template("index.html", prof = professeur)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
  
 
 @app.route("/items")
 def items():
     if not session.get("id_professeur"):
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
     items = Item.query.all()
     return render_template("item.html",items = items)
 
