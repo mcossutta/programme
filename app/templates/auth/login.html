@@ -7,13 +7,13 @@ Connexion
 {% block content %}
 
 
-<form method="POST" action="{{ url_for('auth.login') }}">
+<form method="POST" action="{{ url_for('auth.login') }}" class="card p-2 col-4 container-fluid">
     <div class="form-group">
       {{form.hidden_tag()}}
       {{form.trigramme.label}}
       {{form.trigramme(class="form-control",placeholder="Trigramme")}}
     </div>
-      {{form.submit(class="btn btn-primary")}}
+      {{form.submit(class="btn btn-primary  mt-2")}}
   </form>
 
 {% endblock content %}

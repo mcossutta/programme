@@ -8,26 +8,18 @@ Créer un nouvel élève
 
 <form method="POST" action="{{ url_for('eleve.add_eleve') }}" class="card p-2 col-4 container-fluid">
     <div class="form-group">
-      <label for="nom">Nom</label>
-      <input type="text"  name="nom" class="form-control" >
-      <label for="prenom">Prenom</label>
-      <input type="text"  name="prenom" class="form-control"  >
+      {{form.nom.label}}
+      {{form.nom(class="form-control")}}
+      {{form.prenom.label}}
+      {{form.prenom(class="form-control")}}
     </div>
-    <label for="liste">Liste</label>
-    <select name='liste' ng-model='discussionsSelect' class='form-control'>
-        {% for liste in listes() %}
-        <option  value= "{{ liste.id }}"> {{ liste.nom }} </option>
-        {% endfor %}
-      </select>
-      <label for="classe">Classe</label>
-      <select name='classe' ng-model='discussionsSelect' class='form-control'>
-        {% for classe in classes %}
-        
-        <option  value= "{{ classe.id }}"> {{ classe.nom }} </option>
-     
-        {% endfor %}
-      </select>
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    <div class="form-group">
+      {{form.id_liste.label}}
+      {{form.id_liste(class="form-control")}}
+      {{form.id_classe.label}}
+      {{form.id_classe(class="form-control")}}
+    </div>
+    {{form.submit(class="btn btn-primary  mt-2")}}
   </form>
 
 {% endblock content %}
