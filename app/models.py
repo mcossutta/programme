@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.orm import object_session
 
 # Les thèmes du bulletin arithmétique, géométrie, algèbre et grandeur et mesure 
 class Theme(db.Model):
@@ -18,7 +19,6 @@ class Eleve(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     nom = db.Column(db.String(100))
     prenom = db.Column(db.String(100))
-    id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
     id_liste = db.Column(db.Integer,db.ForeignKey('liste.id'))
     id_classe = db.Column(db.Integer,db.ForeignKey('classe.id'))
     
@@ -30,12 +30,16 @@ class Professeur(db.Model):
     nom = db.Column(db.String(100))
     prenom = db.Column(db.String(100))
     trigramme = db.Column(db.String(100))
-    
     abonnements = db.relationship('Abonnement',backref="professeur")
-    eleves = db.relationship('Eleve',backref="professeur")
     notes = db.relationship('Note',backref="professeur")
     classes = db.relationship('Classe',backref="professeur")
-
+    @property
+    def eleves(self):
+        return object_session(self).query(Eleve).\
+            join(Classe).filter(
+                Classe.id_professeur == self.id,
+                Eleve.id_classe == Classe.id
+            )
 
 # Les listes auxquelles le prof est abonné --> seulement une table ?
 class Abonnement(db.Model):

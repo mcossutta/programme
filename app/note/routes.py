@@ -2,8 +2,9 @@ from flask import  render_template ,request, session, redirect, url_for, send_fi
 from app import db
 from app.note import bp
 import os
-from app.models import Eleve, Item, Note, Liste 
+from app.models import Eleve, Item, Note, Liste, Professeur
 from app.helpers import tableau_note
+from app.note.forms import CellForm, TableNote
 
 @bp.route("/evaluationpdf/<id>")
 def evaluationpdf(id):
@@ -16,9 +17,6 @@ def evaluationpdf(id):
     return send_file("../"+output_file_pdf, mimetype='application/pdf', attachment_filename=output_file_pdf,as_attachment=True)
 
 
-
-
-
 @bp.route("/notes")
 def notes():
     # check login
@@ -29,12 +27,14 @@ def notes():
     # texte des évaluations
     options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
 
+    professeur = Professeur.query.get(session["id_professeur"])
     id = request.args.get("id")
     
+
     if id is not None:
         eleves = Eleve.query.filter_by(id=id)
     else:
-        eleves = Eleve.query.filter_by(id_professeur=session["id_professeur"]).order_by(Eleve.id_classe,Eleve.nom)
+        eleves = professeur.eleves.order_by(Eleve.id_classe,Eleve.nom)
   
     # On introduit une pagination
     page = request.args.get('page', 1, type=int)
@@ -67,8 +67,20 @@ def notes():
             selected_value[str(x.id_item)+"A"] = x.note
         else:
             selected_value[str(x.id_item)+"B"] = x.note
+    
 
-    return render_template("note/notes.html",eleves = eleves,eleve = eleve, items = items, selected_value=selected_value, options=options,id=id)
+    form = TableNote()
+   
+
+    for item in items:
+        noteform = CellForm()
+        noteform.note_1.default = selected_value[str(item.id)+"A"]
+        noteform.note_2.default = selected_value[str(item.id)+"B"]
+       
+        form.notes.append_entry(noteform)
+
+
+    return render_template("note/notes.html",eleves = eleves,eleve = eleve, items = items, selected_value=selected_value, options=options,id=id,form=form, zipped=form.notes)
 
 
 

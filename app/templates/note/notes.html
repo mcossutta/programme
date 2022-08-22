@@ -73,10 +73,14 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
 
 
 <form id="myform" action="{{ url_for('note.update_note',id= eleve.id,page=eleves.page) }}">
+{{form.id_change(type="hidden")}}
 
-  <input type="hidden" value="" id="id_change" name="id_change"/>
 
- 
+{% for note in zipped %}
+<div>{{note.note_1()}}{{note.note_2()}}</div>
+{% endfor %}
+
+
 
 
 <table class="table">
@@ -94,7 +98,7 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
         <th scope="row">{{ item.liste.nom }}</th>
         <th scope="row">{{ item.nom }}</th>
         <td>   
-            <select onchange="myFunction(this)" id='{{ item.id ~ "A" }}' name='{{ item.id ~ "A" }}' ng-model='discussionsSelect' class='form-control'>
+            <select onchange="myFunction(this)" id='{{ item.id ~ "A" }}' name='{{ item.id ~ "A" }}'  class='form-control'>
               {% for option in options %}
                 <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"A"] == option.value}}> {{ option.texte }} </option>
               {% endfor %}
@@ -102,9 +106,9 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
         </td>
 
         <td>    
-          <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' ng-model='discussionsSelect' class='form-control'>
+          <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' class='form-control'>
           {% for option in options %}
-          <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"A"] == option.value}}> {{ option.texte }} </option>
+          <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"B"] == option.value}}> {{ option.texte }} </option>
           {% endfor %}
           </select></td>
       </tr>
