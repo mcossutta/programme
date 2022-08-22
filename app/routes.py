@@ -8,6 +8,7 @@ import time
 def get_timestamp():
     return int(time.time())
 app.jinja_env.globals['timestamp'] = get_timestamp
+app.jinja_env.globals.update(zip=zip)
 
 @app.context_processor
 def listes():

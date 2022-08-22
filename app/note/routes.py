@@ -30,7 +30,7 @@ def notes():
     professeur = Professeur.query.get(session["id_professeur"])
     id = request.args.get("id")
     
-
+    # Si id est rempli un seul élève
     if id is not None:
         eleves = Eleve.query.filter_by(id=id)
     else:
@@ -40,7 +40,7 @@ def notes():
     page = request.args.get('page', 1, type=int)
     eleves = eleves.paginate(page=page, per_page=1)
 
-    # Eleve
+    # Eleve courant
     eleve = eleves.items[0]
     if eleve.liste is None:
         items = Item.query.all()
@@ -53,48 +53,32 @@ def notes():
     if id_liste is not None:
         id_liste = request.args.get("liste")
         liste_filtre = Liste.query.get(id_liste)
-        items = liste_filtre.items
-
+        items = liste_filtre.items    
     
-    # Liste des notes vides
-    selected_value = {}
-    for item in items:
-        selected_value[str(item.id)+"A"] = 0
-        selected_value[str(item.id)+"B"] = 0
-        # Liste des notes complétées avec la DB
-    for x in eleve.notes:
-        if x.niveau == 1:
-            selected_value[str(x.id_item)+"A"] = x.note
-        else:
-            selected_value[str(x.id_item)+"B"] = x.note
-    
-
+    # Remplis la form avec les notes existantes.
     form = TableNote()
-   
+    query = Note.query.filter_by(id_eleve=eleve.id)
 
     for item in items:
         noteform = CellForm()
-        noteform.note_1.default = selected_value[str(item.id)+"A"]
-        noteform.note_2.default = selected_value[str(item.id)+"B"]
-       
+        n1 = query.filter_by(id_item=item.id,niveau=1).first()
+        n2 = query.filter_by(id_item=item.id,niveau=2).first()
+        noteform.note_1 = n1.note if n1 is not None else 0
+        noteform.note_2 = n2.note if n2 is not None else 0        
         form.notes.append_entry(noteform)
 
-
-    return render_template("note/notes.html",eleves = eleves,eleve = eleve, items = items, selected_value=selected_value, options=options,id=id,form=form, zipped=form.notes)
-
-
-
-
+    # eleve peut etre remplacer par eleves.items[0]
+    return render_template("note/notes.html",eleves = eleves,eleve = eleve, items = items ,id=id,form=form)
 
 
 
 @bp.route("/update_note/<id>")
 def update_note(id): 
-    Niveau = {"A":1,"B":2}
-    x = request.args.get("id_change")
-    niveau = Niveau[x[-1:]]
-    id_item = int(x[:-1])
-    note_el = int(request.args.get(x))
+    id_item = int(request.args.get("id_change"))
+    y = request.args.get("name_change")
+    niveau = int(y[-1:])
+    note_el = int(request.args.get(y))    
+    
     notes = Note.query.filter_by(id_eleve =int(id),niveau = niveau,id_item=id_item)
     
     if notes.first() is not None:

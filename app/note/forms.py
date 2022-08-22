@@ -16,6 +16,7 @@ class CellForm(Form):
 
 class TableNote(FlaskForm):
     id_change = StringField("id_change")
+    name_change = StringField("name_change")
     notes = FieldList(FormField(CellForm))
 
 

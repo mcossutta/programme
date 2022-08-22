@@ -33,12 +33,7 @@
         &raquo;
     </a>
 </div>
-<!--<p class="text-right mt-3">
-   Showing page {{ eleves.page }} of {{ eleves.pages }}
-</p>-->
-
-
-    {% endblock titre %}
+{% endblock titre %}
 
 {% block filtre %}
 <div class="dropdown">
@@ -73,14 +68,10 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
 
 
 <form id="myform" action="{{ url_for('note.update_note',id= eleve.id,page=eleves.page) }}">
-{{form.id_change(type="hidden")}}
 
-
-{% for note in zipped %}
-<div>{{note.note_1()}}{{note.note_2()}}</div>
-{% endfor %}
-
-
+  <!-- les deux hidden tag permettent de connaître le champ modifié-->
+{{form.id_change(type="hidden",id="id_change")}}
+{{form.name_change(type="hidden",id="name_change")}}
 
 
 <table class="table">
@@ -94,22 +85,15 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
     </thead>
     <tbody>
       <tr>
-        {% for item in items %}
+        {% for item,note in zip(items,form.notes) %}
         <th scope="row">{{ item.liste.nom }}</th>
         <th scope="row">{{ item.nom }}</th>
         <td>   
-            <select onchange="myFunction(this)" id='{{ item.id ~ "A" }}' name='{{ item.id ~ "A" }}'  class='form-control'>
-              {% for option in options %}
-                <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"A"] == option.value}}> {{ option.texte }} </option>
-              {% endfor %}
-            </select>
+            {{note.note_1(onchange="myFunction(this)",id=item.id,class='form-control')}}
         </td>
 
         <td>    
-          <select onchange="myFunction(this)" id='{{ item.id ~ "B" }}' name='{{ item.id ~ "B" }}' class='form-control'>
-          {% for option in options %}
-          <option value= "{{ option.value }}" {{"selected" if selected_value[item.id~"B"] == option.value}}> {{ option.texte }} </option>
-          {% endfor %}
+          {{note.note_2(onchange="myFunction(this)",id=item.id,class='form-control')}}
           </select></td>
       </tr>
       {% endfor %}       
@@ -119,9 +103,9 @@ Evaluations : {{ eleve.prenom }} {{eleve.nom}} <a href="{{ url_for('note.evaluat
 </form>
 
 <script>
-
 function myFunction(el){
 document.getElementById("id_change").value = el.id;
+document.getElementById("name_change").value = el.name;
 document.getElementById("myform").submit()
 }
 
