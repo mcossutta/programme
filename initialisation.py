@@ -43,6 +43,10 @@ with open("data/classe.csv") as csv_file:
     for row in csv_reader:
         if Classe.query.get(row["id"]) is None:
             classe = Classe(id = row["id"], nom = row["nom"], id_professeur = row["id_professeur"])
+        else:
+            classe = Classe.query.get(row["id"])
+            classe.id_professeur = row["id_professeur"]
+            classe.nom = row["nom"]
             db.session.add(classe)
 
 # Création des élèves test

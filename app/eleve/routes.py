@@ -6,9 +6,10 @@ from app.eleve.forms import AddEleve, UpdateEleve
 
 @bp.route("/eleves")
 def eleves():
-    professeur = Professeur.query.get(session["id_professeur"])
+    
     if not session.get("id_professeur"):
         return redirect(url_for("auth.login"))
+    professeur = Professeur.query.get(session["id_professeur"])
     eleves = professeur.eleves.order_by(Eleve.id_classe,Eleve.nom)
     return render_template("eleve/eleves.html", eleves = eleves)        
         

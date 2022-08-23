@@ -1,5 +1,6 @@
 from latex import build_pdf
-from app.models import Eleve, Item, Note
+from flask import session
+from app.models import Eleve, Item, Note, Professeur
 import os, time
 
 
@@ -7,7 +8,7 @@ def tableau_note(id_eleve):
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
     eleve = Eleve.query.get(id_eleve)
     eleve_text = eleve.prenom + " " + eleve.nom +" ("+eleve.classe.nom+")"
-    prof = eleve.professeur
+    prof = Professeur.query.get(session["id_professeur"])
     texte_initial = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
     texte_final = {"1":"","2":"\n\multicolumn{3}{l}{\\textbf{Espace}}\\\\\n\\hline","3":"\multicolumn{3}{l}{\\textbf{Algèbre}}\\\\\n\\hline","4":"\multicolumn{3}{l}{\\textbf{Grandeurs et mesures}}\\\\\n\\hline"}
   

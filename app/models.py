@@ -40,6 +40,8 @@ class Professeur(db.Model):
                 Classe.id_professeur == self.id,
                 Eleve.id_classe == Classe.id
             )
+    def __repr__(self):
+        return '<id : {} Trigramme : {}>'.format(self.id,self.trigramme)
 
 # Les listes auxquelles le prof est abonné --> seulement une table ?
 class Abonnement(db.Model):

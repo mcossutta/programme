@@ -24,8 +24,7 @@ def notes():
         return redirect(url_for("auth.login"))
     
 
-    # texte des évaluations
-    options = [{"value":0,"texte":"Pas d'évaluation"},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
+    
 
     professeur = Professeur.query.get(session["id_professeur"])
     id = request.args.get("id")
@@ -40,8 +39,13 @@ def notes():
     page = request.args.get('page', 1, type=int)
     eleves = eleves.paginate(page=page, per_page=1)
 
+
     # Eleve courant
-    eleve = eleves.items[0]
+    if len(eleves.items) == 0:
+        return "Pas d'élève"
+    else:
+        eleve = eleves.items[0]
+     
     if eleve.liste is None:
         items = Item.query.all()
     else:
@@ -68,7 +72,7 @@ def notes():
         form.notes.append_entry(noteform)
 
     # eleve peut etre remplacer par eleves.items[0]
-    return render_template("note/notes.html",eleves = eleves,eleve = eleve, items = items ,id=id,form=form)
+    return render_template("note/notes.html",eleves = eleves,id=id, items = items,form=form)
 
 
 
