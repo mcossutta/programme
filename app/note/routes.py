@@ -27,9 +27,10 @@ def notes():
     
 
     professeur = Professeur.query.get(session["id_professeur"])
-    id = request.args.get("id")
+    
     
     # Si id est rempli un seul élève
+    id = request.args.get("id")
     if id is not None:
         eleves = Eleve.query.filter_by(id=id)
     else:
@@ -52,17 +53,15 @@ def notes():
         items = Item.query.filter_by(id_liste = eleve.liste.id)
     
     
-    # Filtre élève
+    # Filtre items
     id_liste = request.args.get("liste")
     if id_liste is not None:
-        id_liste = request.args.get("liste")
-        liste_filtre = Liste.query.get(id_liste)
-        items = liste_filtre.items    
+        items = Liste.query.get(id_liste).items
+
     
     # Remplis la form avec les notes existantes.
     form = TableNote()
     query = Note.query.filter_by(id_eleve=eleve.id)
-
     for item in items:
         noteform = CellForm()
         n1 = query.filter_by(id_item=item.id,niveau=1).first()

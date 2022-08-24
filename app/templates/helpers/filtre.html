@@ -1,0 +1,17 @@
+{% macro filtre_liste(nom) %}
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Filtre Liste
+  </button>
+  
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    {% for liste in listes() %}   
+    <li><a class="dropdown-item" href="{{ url_for(nom,liste=liste.id,**kwargs)}}">{{liste.nom}}</a></li>
+     {% endfor %}
+     <li><a class="dropdown-item" href="{{ url_for(nom,**kwargs)}}">Supprimer le filtre</a></li>
+  </ul>
+</div>
+ 
+{% endmacro %}
+

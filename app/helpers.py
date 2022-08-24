@@ -4,6 +4,9 @@ from app.models import Eleve, Item, Note, Professeur
 import os, time
 
 
+
+
+
 def tableau_note(id_eleve):
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
     eleve = Eleve.query.get(id_eleve)

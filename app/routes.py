@@ -1,4 +1,4 @@
-from flask import  render_template , session, redirect, url_for
+from flask import  render_template , session, redirect, url_for, request
 from app import app
 from app.models import  Professeur, Item,  Liste 
 
@@ -30,6 +30,13 @@ def index():
 def items():
     if not session.get("id_professeur"):
         return redirect(url_for("auth.login"))
-    items = Item.query.all()
+    
+    # Filtre items
+    id_liste = request.args.get("liste")
+    if id_liste is not None:
+        items = Liste.query.get(id_liste).items
+    else:
+        items = Item.query.all()
+    
     return render_template("item.html",items = items)
 

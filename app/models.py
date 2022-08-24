@@ -20,9 +20,11 @@ class Eleve(db.Model):
     nom = db.Column(db.String(100))
     prenom = db.Column(db.String(100))
     id_liste = db.Column(db.Integer,db.ForeignKey('liste.id'))
-    id_classe = db.Column(db.Integer,db.ForeignKey('classe.id'))
-    
+    id_classe = db.Column(db.Integer,db.ForeignKey('classe.id'))    
     notes = db.relationship('Note',backref="eleve")
+
+    def __repr__(self):
+        return '<id : {} Nom : {}>'.format(self.id,self.nom)
     
 # Les professeurs
 class Professeur(db.Model):
@@ -58,6 +60,10 @@ class Liste(db.Model):
     abonnements = db.relationship("Abonnement",backref="liste")
     items = db.relationship("Item",backref="liste")
     eleves = db.relationship("Eleve",backref="liste")
+    
+    def __repr__(self):
+        return '<id : {} nom : {}>'.format(self.id,self.nom)
+
 
 # les items du bulletin
 class Item(db.Model):
@@ -65,9 +71,10 @@ class Item(db.Model):
     nom = db.Column(db.String(128))
     id_theme = db.Column(db.Integer,db.ForeignKey('theme.id'))
     id_liste = db.Column(db.Integer,db.ForeignKey('liste.id'))
-
     notes = db.relationship("Note",backref="item")
-    
+
+    def __repr__(self):
+        return '<id : {} Nom : {}>'.format(self.id,self.nom)
 
 # Les notes du bulletin
 class Note(db.Model):
@@ -78,6 +85,8 @@ class Note(db.Model):
     id_eleve = db.Column(db.Integer,db.ForeignKey('eleve.id'))
     id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
 
+    def __repr__(self):
+        return '<niveau : {} id item : {} note : {}>'.format(self.niveau,self.id_item,self.note)
 
 # les classes de l'école
 class Classe(db.Model):
@@ -85,3 +94,6 @@ class Classe(db.Model):
     nom = db.Column(db.String(100), unique = True)
     id_professeur = db.Column(db.Integer,db.ForeignKey('professeur.id'))
     eleves = db.relationship("Eleve",backref="classe")
+
+    def __repr__(self):
+        return '<id : {} Nom : {}>'.format(self.id,self.nom)

@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-
+{% from 'helpers/filtre.html' import filtre_liste with context %}
 
 {% block titre %}
 Item bulletin
 {% endblock titre %}
+
+{% block filtre%}
+{{filtre_liste("items")}}
+{%endblock filtre%}
 
 
 {% block content %}

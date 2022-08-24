@@ -1,8 +1,8 @@
+{% from 'helpers/filtre.html' import filtre_liste with context %}
 {% extends "base.html" %}
 
 
 {% block titre %}
-
  
 <!-- Pagination Links-->
 <div class="text-right">
@@ -36,30 +36,14 @@
 {% endblock titre %}
 
 {% block filtre %}
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Filtre Liste
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    {% if id %}
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=1,id=id)}}">A</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=2,id=id)}}">B</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=3,id=id)}}">C</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,id=id)}}">Supprimer filtre</a></li>
-  {% else %}
-  <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=1)}}">A</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=2)}}">B</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page,liste=3)}}">C</a></li>
-    <li><a class="dropdown-item" href="{{ url_for('note.notes',page=eleves.page)}}">Supprimer filtre</a></li>
-   {% endif %} 
-  </ul>
-</div>
+
+{% if id %}
+{{filtre_liste('note.notes',page=eleves.page,id=id)}}
+{%else%}
+{{filtre_liste('note.notes',page=eleves.page)}}
+{%endif%}
+
 {% endblock filtre %}
-
-
-
-
-
 
 {% block content %}
 <h3>
