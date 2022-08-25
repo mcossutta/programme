@@ -53,10 +53,14 @@ def notes():
         items = Item.query.filter_by(id_liste = eleve.liste.id)
     
     
-    # Filtre items
+    # Filtre liste
     id_liste = request.args.get("liste")
     if id_liste is not None:
         items = Liste.query.get(id_liste).items
+        liste_selected = Liste.query.get(id_liste)
+    else:
+        items = Item.query.all()
+        liste_selected = None
 
     
     # Remplis la form avec les notes existantes.
@@ -71,7 +75,7 @@ def notes():
         form.notes.append_entry(noteform)
 
     # eleve peut etre remplacer par eleves.items[0]
-    return render_template("note/notes.html",eleves = eleves,id=id, items = items,form=form)
+    return render_template("note/notes.html",eleves = eleves,id=id, items = items,form=form,liste_selected=liste_selected)
 
 
 

@@ -7,14 +7,19 @@ import time
 
 def get_timestamp():
     return int(time.time())
+
+
+
 app.jinja_env.globals['timestamp'] = get_timestamp
 app.jinja_env.globals.update(zip=zip)
 
 @app.context_processor
-def listes():
-    def Listes():
+def filtre():
+    def listes():
         return Liste.query.all()
-    return  {"listes":Listes}
+    def professeurs():
+        return Professeur.query.all()
+    return  {"listes":listes,"professeurs":professeurs}
 
 
 @app.route("/")

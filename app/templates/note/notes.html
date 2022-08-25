@@ -37,11 +37,8 @@
 
 {% block filtre %}
 
-{% if id %}
-{{filtre_liste('note.notes',page=eleves.page,id=id)}}
-{%else%}
-{{filtre_liste('note.notes',page=eleves.page)}}
-{%endif%}
+
+{{filtre_liste('note.notes',liste_selected ,page=eleves.page,id=id)}}
 
 {% endblock filtre %}
 
