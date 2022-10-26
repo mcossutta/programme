@@ -14,21 +14,15 @@
     {% for page_num in eleves.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}{% if page_num %}
 <!-- Check for the active page and set the link to "Active"-->
             {% if eleves.page == page_num %}
-            <a href="{{ url_for('note.notes', page=page_num) }}"
-               class="btn btn-dark">
-                {{ page_num }}
-            </a>
+            <a href="{{ url_for('note.notes', page=page_num) }}" class="btn btn-dark">{{ page_num }}</a>
             {% else %}
-            <a href="{{ url_for('note.notes', page=page_num) }}"
-               class="btn btn-outline-dark">
-                {{ page_num }}
-            </a>
+            <a href="{{ url_for('note.notes', page=page_num) }}" class="btn btn-outline-dark">{{ page_num }}</a>
             {% endif %}
         {% else %}
             ...
         {% endif %}
-    {% endfor %}    <a href="{{ url_for('note.notes', page=eleves.next_num) }}"
-       class="btn btn-outline-dark 
+    {% endfor %}    
+    <a href="{{ url_for('note.notes', page=eleves.next_num) }}" class="btn btn-outline-dark 
        {% if eleves.page == eleves.pages %}disabled{% endif %}">
         &raquo;
     </a>
@@ -43,8 +37,14 @@
 {% endblock filtre %}
 
 {% block content %}
+
+{% if eleves.items|length==0 %}
+Pas d'élève séléctionné
+
+{%else%}
+
 <h3>
-Evaluations : {{ eleves.items[0].prenom }} {{eleves.items[0].nom}} <a href="{{ url_for('note.evaluationpdf',id=eleves.items[0].id) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>   
+Evaluations : {{ eleves.items[0]|format_eleve}} <a href="{{ url_for('note.evaluationpdf',id=eleves.items[0].id) }}" class="btn btn-sm btn-outline-secondary">Bulletin</a>   
 </h3>
 
 
@@ -82,6 +82,7 @@ Evaluations : {{ eleves.items[0].prenom }} {{eleves.items[0].nom}} <a href="{{ u
 
 
 </form>
+{%endif%}
 
 <script>
 function myFunction(el){

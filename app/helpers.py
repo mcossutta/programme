@@ -1,9 +1,20 @@
 from latex import build_pdf
-from flask import session
-from app.models import Eleve, Item, Note, Professeur
+from flask import session,request
+from app.models import Eleve, Item, Note, Professeur,Liste
 import os, time
 
 
+def Filtre():
+
+  # Filtre des items par liste
+    id_liste = request.args.get("liste")
+    if id_liste is not None:
+        items = Liste.query.get(id_liste).items
+        liste_selected = Liste.query.get(id_liste)
+    else:
+        items = Item.query.all()
+        liste_selected = None
+    return {"items":items,"liste_selected":liste_selected}
 
 
 

@@ -4,6 +4,10 @@ from app import db
 from app.models import Eleve, Professeur
 from app.eleve.forms import AddEleve, UpdateEleve
 
+
+
+
+
 @bp.route("/eleves")
 def eleves():
     
@@ -12,7 +16,7 @@ def eleves():
     professeur = Professeur.query.get(session["id_professeur"])
     eleves = professeur.eleves.order_by(Eleve.id_classe,Eleve.nom)
     return render_template("eleve/eleves.html", eleves = eleves)        
-        
+    
 @bp.route("/delete/<id>")
 def delete_eleve(id):
     eleve = Eleve.query.get(id)

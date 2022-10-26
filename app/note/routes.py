@@ -3,8 +3,10 @@ from app import db
 from app.note import bp
 import os
 from app.models import Eleve, Item, Note, Liste, Professeur
-from app.helpers import tableau_note
+from app.helpers import tableau_note, Filtre
 from app.note.forms import CellForm, TableNote
+
+
 
 @bp.route("/evaluationpdf/<id>")
 def evaluationpdf(id):
@@ -24,11 +26,8 @@ def notes():
         return redirect(url_for("auth.login"))
     
 
-    
-
     professeur = Professeur.query.get(session["id_professeur"])
-    
-    
+        
     # Si id est rempli un seul élève
     id = request.args.get("id")
     if id is not None:
@@ -39,11 +38,15 @@ def notes():
     # On introduit une pagination
     page = request.args.get('page', 1, type=int)
     eleves = eleves.paginate(page=page, per_page=1)
+   
 
+    # definition des filtres
+    filtre = Filtre()
 
     # Eleve courant
     if len(eleves.items) == 0:
-        return "Pas d'élève"
+        return render_template("note/notes.html",eleves=eleves,id=id,items = filtre["items"],liste_selected=filtre["liste_selected"])
+        print("fuck")
     else:
         eleve = eleves.items[0]
      
@@ -53,14 +56,7 @@ def notes():
         items = Item.query.filter_by(id_liste = eleve.liste.id)
     
     
-    # Filtre liste
-    id_liste = request.args.get("liste")
-    if id_liste is not None:
-        items = Liste.query.get(id_liste).items
-        liste_selected = Liste.query.get(id_liste)
-    else:
-        items = Item.query.all()
-        liste_selected = None
+    
 
     
     # Remplis la form avec les notes existantes.
@@ -74,8 +70,10 @@ def notes():
         noteform.note_2 = n2.note if n2 is not None else 0        
         form.notes.append_entry(noteform)
 
+   
+
     # eleve peut etre remplacer par eleves.items[0]
-    return render_template("note/notes.html",eleves = eleves,id=id, items = items,form=form,liste_selected=liste_selected)
+    return render_template("note/notes.html",eleves = eleves,id=id,form=form,items = filtre["items"],liste_selected=filtre["liste_selected"])
 
 
 

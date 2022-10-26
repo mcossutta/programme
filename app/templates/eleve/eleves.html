@@ -17,7 +17,7 @@ Elèves <a href="{{ url_for('eleve.add_eleve') }}" class="btn btn-sm btn-outline
                     
 
 
-                    <label for="eleve">{{ eleve.nom }} {{ eleve.prenom }} {{ eleve.classe.nom }} {{ eleve.liste.nom}}</label>
+                    <label for="eleve">{{eleve|format_eleve}}</label>
                </div>
                <div class="col-4">
                 
