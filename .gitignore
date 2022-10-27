@@ -5,3 +5,4 @@ app/__pychache__
 venv/
 migrations/
 .env
+data/
