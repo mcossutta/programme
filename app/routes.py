@@ -1,12 +1,20 @@
-from flask import  render_template , session, redirect, url_for
+from flask import  render_template , session, redirect, url_for, after_this_request, send_file
 from app import app
-from app.models import  Professeur,  Liste 
-from app.helpers import Filtre
+from app.models import  Professeur,  Liste , Classe
+from app.helpers import Filtre, tableau_note
 import time
-
+import os
+from PyPDF2 import PdfMerger
 
 def get_timestamp():
     return int(time.time())
+
+
+
+
+
+
+
 
 
 
@@ -43,6 +51,24 @@ def index():
         return redirect(url_for('auth.login'))
  
 
+
+@app.route("/evaluationpdf_classe/<id_classe>")
+def evaluationpdf_classe(id_classe):
+    merger = PdfMerger()
+    classe = Classe.query.get(id_classe)
+    eleves = classe.eleves
+    for eleve in eleves:
+        output_file_pdf = tableau_note(eleve.id)
+        merger.append(output_file_pdf)
+    merger.write("result.pdf")
+    merger.close()
+    @after_this_request
+    def remove_file(response):
+        filelist = [ f for f in os.listdir() if f.endswith(".pdf") ]
+        for f in filelist:
+            os.remove(f)
+        return response
+    return send_file("../result.pdf", mimetype='application/pdf', attachment_filename=output_file_pdf,as_attachment=True)
 
 
 # Un blue print eleve pour la page de la modification des items.
