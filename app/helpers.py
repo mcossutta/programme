@@ -1,6 +1,7 @@
+from urllib.request import ProxyBasicAuthHandler
 from latex import build_pdf
 from flask import session,request
-from app.models import Eleve, Item, Note, Professeur,Liste
+from app.models import Eleve, Item, Note, Professeur,Liste, Classe
 import os, time
 
 
@@ -17,8 +18,7 @@ def Filtre():
     return {"items":items,"liste_selected":liste_selected}
 
 
-
-def tableau_note(id_eleve):
+def feuille_note_eleve(id_eleve):
     options = [{"value":0,"texte":""},{"value":1,"texte":"NA"},{"value":2,"texte":"EA"},{"value":3,"texte":"A"},{"value":4,"texte":"M"}]
     eleve = Eleve.query.get(id_eleve)
     eleve_text = eleve.prenom + " " + eleve.nom +" ("+eleve.classe.nom+")"
@@ -47,19 +47,47 @@ def tableau_note(id_eleve):
         if texte_final[x] == texte_initial[x]:
             texte_final[x] = ""
     texte_final = "".join(texte_final.values())
-    print(texte_final)
 
     # Complète le texte :
-    with open("app/templates_latex/feuille_template_modele.tex", "r") as myfile :
+    with open("app/templates_latex/contenu.tex", "r") as myfile :
         text = myfile.read()
         text = text.replace("$ELEVE$",eleve_text)
         text = text.replace("$PROF$",prof.prenom + " " +prof.nom)
         text = text.replace("exemple&A&A\\\\", texte_final)
-    
+    return text
+
+def insert_text(text):
     output_file_tex = "evaluation"+ str(int(time.time())) +".tex"
     output_file_pdf = "evaluation"+ str(int(time.time()))     +".pdf"
+
+    with open("app/templates_latex/feuille_template_modele.tex", "r") as myfile :
+        text_base = myfile.read()
+        text_base = text_base.replace("\\include{contenu}",text)
+        print(text_base)
     with open(output_file_tex,"w") as output :
-        output.write(text)
+            output.write(text_base)
+    pdf = build_pdf(open(output_file_tex))
+    os.remove(output_file_tex)
+    pdf.save_to(output_file_pdf)
+    return output_file_pdf
+
+def tableau_note(id_eleve):
+    text = feuille_note_eleve(id_eleve)
+    return insert_text(text)
+
+def tableau_note_classe(id_classe):
+    classe = Classe.query.get(id_classe)
+    eleves = classe.eleves
+    text="\n\\newpage\n".join([feuille_note_eleve(eleve.id) for eleve in eleves])
+    output_file_tex = "evaluation"+ str(int(time.time())) +".tex"
+    output_file_pdf = "evaluation"+ str(int(time.time()))     +".pdf"
+
+    with open("app/templates_latex/feuille_template_modele.tex", "r") as myfile :
+        text_base = myfile.read()
+        text_base = text_base.replace("\\include{contenu}",text)
+        print(text_base)
+    with open(output_file_tex,"w") as output :
+            output.write(text_base)
     pdf = build_pdf(open(output_file_tex))
     os.remove(output_file_tex)
     pdf.save_to(output_file_pdf)
