@@ -1,21 +1,13 @@
 from flask import  render_template , session, redirect, url_for, after_this_request, send_file
 from app import app
 from app.models import  Professeur,  Liste , Classe
-from app.helpers import Filtre, tableau_note, tableau_note_classe
+from app.helpers import Filtre, tableau_note_classe
 import time
 import os
 
 
 def get_timestamp():
     return int(time.time())
-
-
-
-
-
-
-
-
 
 
 app.jinja_env.globals['timestamp'] = get_timestamp

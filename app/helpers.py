@@ -12,8 +12,10 @@ def Filtre():
     if id_liste is not None:
         items = Liste.query.get(id_liste).items
         liste_selected = Liste.query.get(id_liste)
+    
     else:
         items = Item.query.all()
+        print(items)
         liste_selected = None
     return {"items":items,"liste_selected":liste_selected}
 

@@ -45,18 +45,21 @@ def notes():
 
     # Eleve courant
     if len(eleves.items) == 0:
-        return render_template("note/notes.html",eleves=eleves,id=id,items = filtre["items"],liste_selected=filtre["liste_selected"])
-        print("fuck")
+        return "CAS VIDE" 
+        #"render_template("note/notes.html",eleves=eleves,id=id,items = filtre["items"],liste_selected=filtre["liste_selected"])"
     else:
         eleve = eleves.items[0]
      
+    # Choix des items tous ou ceux de l'élève
     if eleve.liste is None:
         items = Item.query.all()
     else:
         items = Item.query.filter_by(id_liste = eleve.liste.id)
     
-    
-    
+    # Si un filtre est selectionné cela surpasse le premier choix
+    id_liste = request.args.get("liste")
+    if id_liste is not None:
+        items = Liste.query.get(id_liste).items
 
     
     # Remplis la form avec les notes existantes.
@@ -71,9 +74,7 @@ def notes():
         form.notes.append_entry(noteform)
 
    
-
-    # eleve peut etre remplacer par eleves.items[0]
-    return render_template("note/notes.html",eleves = eleves,id=id,form=form,items = filtre["items"],liste_selected=filtre["liste_selected"])
+    return render_template("note/notes.html",eleves = eleves,id=id,form=form,items = items,liste_selected=filtre["liste_selected"])
 
 
 
