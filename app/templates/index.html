@@ -21,7 +21,7 @@ Home
            </div>
            <div class="col-4">
             
-            <a id ="eleve" href="" class="btn btn-sm btn-outline-secondary">  Elèves </a>
+            <a id ="eleve" href="{{ url_for('note.notes',id_classe=classe.id) }}" class="btn btn-sm btn-outline-secondary">  Elèves </a>
             <a href="{{ url_for('evaluationpdf_classe',id_classe=classe.id) }}" class="btn btn-sm btn-outline-secondary">Tout les bulletins</a>    
           </div>
 

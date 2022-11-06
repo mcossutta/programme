@@ -2,8 +2,8 @@ from flask import  render_template ,request, session, redirect, url_for, send_fi
 from app import db
 from app.note import bp
 import os
-from app.models import Eleve, Item, Note, Liste, Professeur
-from app.helpers import tableau_note, Filtre
+from app.models import Eleve, Item, Note, Liste, Professeur, Classe
+from app.helpers import tableau_note
 from app.note.forms import CellForm, TableNote
 
 
@@ -33,7 +33,13 @@ def notes():
     if id is not None:
         eleves = Eleve.query.filter_by(id=id)
     else:
-        eleves = professeur.eleves.order_by(Eleve.id_classe,Eleve.nom)
+        eleves = professeur.get_eleves()
+    
+    id_classe= request.args.get("id_classe")
+    if id_classe is not None:
+        eleves = Classe.query.get(id_classe).eleves
+
+
   
     # On introduit une pagination
     page = request.args.get('page', 1, type=int)
@@ -41,7 +47,12 @@ def notes():
    
 
     # definition des filtres
-    filtre = Filtre()
+    # Filtre des items par liste
+    id_liste = request.args.get("liste")
+    if id_liste is not None:
+        liste_selected = Liste.query.get(id_liste)
+    else:
+        liste_selected = None
 
     # Eleve courant
     if len(eleves.items) == 0:
@@ -50,7 +61,7 @@ def notes():
     else:
         eleve = eleves.items[0]
      
-    # Choix des items tous ou ceux de l'élève
+    
     if eleve.liste is None:
         items = Item.query.all()
     else:
@@ -74,7 +85,7 @@ def notes():
         form.notes.append_entry(noteform)
 
    
-    return render_template("note/notes.html",eleves = eleves,id=id,form=form,items = items,liste_selected=filtre["liste_selected"])
+    return render_template("note/notes.html",eleves = eleves,id=id,form=form,items = items,liste_selected=liste_selected)
 
 
 
