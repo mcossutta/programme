@@ -7,8 +7,8 @@ load_dotenv(path.join(basedir, '.flaskenv'))
 
 print('sqlite:///' + path.join(basedir, 'app.db'))
 class Config(object):
-    TESTING = True
-    DEBUG = True
+    #TESTING = True
+    #DEBUG = True
     SECRET_KEY = environ.get('SECRET_KEY') 
     SQLALCHEMY_TRACK_MODIFICATION = False
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI") or 'sqlite:///' + path.join(basedir, 'app.db')
